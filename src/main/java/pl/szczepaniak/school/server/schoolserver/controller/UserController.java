@@ -30,8 +30,6 @@ public class UserController extends AbstractController {
     @GetMapping("/users/current/")
     public UserDto getLoggedUser() {
         User user = getCurrentUser();
-
-
         UserDto dto = convert(user);
         return dto;
     }

@@ -1,5 +1,7 @@
 package pl.sykisoft.flashcards.server.flashcardsserver.model;
 
+import javafx.geometry.Pos;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
@@ -12,21 +14,24 @@ public class User {
     private Long id;
 
     private String name;
+    private String surname;
 
     @Email
     private String email;
 
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Flashcard> flashcards;
+    private int permissions;
 
-    public List<Flashcard> getFlashcards() {
-        return flashcards;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Post> posts;
+
+    public List<Post> getFlashcards() {
+        return posts;
     }
 
-    public void setFlashcards(List<Flashcard> flashcards) {
-        this.flashcards = flashcards;
+    public void setFlashcards(List<Post> flashcards) {
+        this.posts = flashcards;
     }
 
     public Long getId() {
@@ -61,4 +66,27 @@ public class User {
         this.password = password;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(int permissions) {
+        this.permissions = permissions;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 }
