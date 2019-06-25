@@ -1,17 +1,14 @@
-package pl.sykisoft.flashcards.server.flashcardsserver;
+package pl.szczepaniak.school.server.schoolserver;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import pl.sykisoft.flashcards.server.flashcardsserver.model.User;
-import pl.sykisoft.flashcards.server.flashcardsserver.repository.FlashCardRepository;
-import pl.sykisoft.flashcards.server.flashcardsserver.repository.FlashcardItemRepository;
-import pl.sykisoft.flashcards.server.flashcardsserver.repository.UserRepository;
-
-import java.util.ArrayList;
-import java.util.List;
+import pl.szczepaniak.school.server.schoolserver.model.Post;
+import pl.szczepaniak.school.server.schoolserver.model.User;
+import pl.szczepaniak.school.server.schoolserver.repository.PostRepositiry;
+import pl.szczepaniak.school.server.schoolserver.repository.UserRepository;
 
 @SpringBootApplication
 public class SchoolServerApplication {
@@ -20,10 +17,8 @@ public class SchoolServerApplication {
     private UserRepository userRepository;
 
     @Autowired
-    private FlashCardRepository flashCardRepository;
+    private PostRepositiry postRepositiry;
 
-    @Autowired
-    private FlashcardItemRepository flashcardItemRepository;
 
 
     public static void main(String[] args) {
@@ -42,16 +37,28 @@ public class SchoolServerApplication {
     private void initUser() {
         User user = new User();
         user.setEmail("johnrambo@gmail.com");
-        user.setName("John Rambo");
+        user.setName("John");
+        user.setSurname("Rambo");
         user.setPassword("12345678");
         User user2 = new User();
         user2.setEmail("example@gmail.com");
-        user2.setName("example");
+        user2.setName("name");
+        user2.setSurname("surname");
         user2.setPassword("12345678");
 
         user = userRepository.save(user);
-        user2 = userRepository.save(user2);
+        Post post1 =  new Post();
+        post1.setUser(user);
+        post1.setContent("Test Content 1");
+        post1.setPermission(0);
+        post1 = postRepositiry.save(post1);
 
+        user2 = userRepository.save(user2);
+        Post post2 =  new Post();
+        post2.setUser(user2);
+        post2.setContent("Test Content 2");
+        post2.setPermission(0);
+        post2 = postRepositiry.save(post2);
 
     }
 

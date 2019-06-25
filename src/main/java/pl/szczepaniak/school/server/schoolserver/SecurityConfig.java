@@ -1,4 +1,4 @@
-package pl.sykisoft.flashcards.server.flashcardsserver;
+package pl.szczepaniak.school.server.schoolserver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,8 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/flashcards").hasAuthority("USER")
-                .antMatchers("/flashcardsitems").hasAuthority("USER")
+                .antMatchers("/posts").hasAuthority("USER")
                 .and().httpBasic();
 
     }

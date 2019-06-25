@@ -1,69 +1,66 @@
-package pl.sykisoft.flashcards.server.flashcardsserver.controller;
+package pl.szczepaniak.school.server.schoolserver.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sykisoft.flashcards.server.flashcardsserver.domain.UserDto;
-import pl.sykisoft.flashcards.server.flashcardsserver.model.User;
+import pl.szczepaniak.school.server.schoolserver.domain.PostDto;
+import pl.szczepaniak.school.server.schoolserver.model.Post;
+import pl.szczepaniak.school.server.schoolserver.model.User;
+import pl.szczepaniak.school.server.schoolserver.repository.PostRepositiry;
 
 import javax.validation.Valid;
 
-public class PostController {
+public class PostController extends AbstractController {
 
-    @GetMapping("/users")
-    public Page<UserDto> getUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(this::convert);
-    }
+    @Autowired
+    private PostRepositiry postRepository;
 
-    @GetMapping("/users/{id}")
-    public UserDto getUserById(@PathVariable Long id) {
-        return userRepository.findById(id).map(this::convert).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
-    }
-
-    @GetMapping("/users/current/")
-    public UserDto getLoggedUser() {
+    @GetMapping("/posts")
+    public Page<PostDto> getFlashcards(Pageable pageable) {
         User user = getCurrentUser();
-        UserDto dto = convert(user);
-        return dto;
+        return postRepository.findUsersPost(user.getId(),pageable).map(this::convert);
     }
 
 
-    @PostMapping("/users")
-    public UserDto createQuestion(@Valid @RequestBody User user) {
-        return convert(userRepository.save(user));
+    @PostMapping("/posts")
+    public PostDto createQuestion(@Valid @RequestBody Post post) {
+        post.setUser(getCurrentUser());
+        return convert(postRepository.save(post));
     }
 
-    @PutMapping("/users/{userId}")
-    public UserDto updateUsers(@PathVariable Long userId,
-                               @Valid @RequestBody User user) {
-        return userRepository.findById(userId)
+    @PutMapping("/posts/{id}")
+    public PostDto updateFlashcard(@PathVariable Long flashcardId,
+                                        @Valid @RequestBody Post post) {
+        return postRepository.findById(flashcardId)
                 .map(question -> {
-                    question.setName(user.getName());
-                    question.setEmail(user.getEmail());
-                    question.setPassword(user.getPassword());
-                    question.setFlashcards(user.getFlashcards());
-                    return convert(userRepository.save(question));
-                }).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
+                    question.setContent(post.getContent());
+                    question.setPermission(post.getPermission());
+                    question.setDateTime(post.getDateTime());
+                    return convert(postRepository.save(question));
+                }).orElseThrow(() -> new ResourceNotFoundException("Post not found with id " + flashcardId));
     }
 
 
-    @DeleteMapping("/users/{userId}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable Long userID) {
-        return userRepository.findById(userID)
+
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable Long flashcardId) {
+        return postRepository.findById(flashcardId)
                 .map(question -> {
-                    userRepository.delete(question);
+                    postRepository.delete(question);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userID));
+                }).orElseThrow(() -> new ResourceNotFoundException("Post not found with id " + flashcardId));
     }
 
-    private UserDto convert(User user) {
-        UserDto dto = new UserDto();
-        dto.setEmail(user.getEmail());
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setPassword(user.getPassword());
+    private PostDto convert(Post flashcard) {
+        PostDto dto = new PostDto();
+        dto.setId(flashcard.getId());
+        dto.setContent(flashcard.getContent());
+        dto.setDateTime(flashcard.getDateTime());
+        dto.setContent(flashcard.getContent());
+        dto.setPermission(flashcard.getPermission());
         return dto;
     }
 }

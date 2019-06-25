@@ -1,14 +1,14 @@
-package pl.sykisoft.flashcards.server.flashcardsserver.domain;
+package pl.szczepaniak.school.server.schoolserver.domain;
 
-import pl.sykisoft.flashcards.server.flashcardsserver.model.User;
+import pl.szczepaniak.school.server.schoolserver.model.User;
 
 import java.time.LocalDateTime;
 
-public class PostDTO {
+public class PostDto {
 
     private Long id;
     private String content;
-    private LocalDateTime lastUpdate;
+    private LocalDateTime dateTime;
     private User user;
     private int permission;
 
@@ -28,12 +28,12 @@ public class PostDTO {
         this.content = content;
     }
 
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public User getUser() {

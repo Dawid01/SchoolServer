@@ -1,10 +1,12 @@
-package pl.sykisoft.flashcards.server.flashcardsserver.domain;
+package pl.szczepaniak.school.server.schoolserver.domain;
 
 public class UserDto {
 
     private Long id;
 
     private String name;
+    private String surname;
+    private int permission;
 
     private String email;
 
@@ -40,5 +42,21 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSuname() {
+        return surname;
+    }
+
+    public void setSuname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
     }
 }

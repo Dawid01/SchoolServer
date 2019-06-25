@@ -1,4 +1,4 @@
-package pl.sykisoft.flashcards.server.flashcardsserver.model;
+package pl.szczepaniak.school.server.schoolserver.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -17,7 +17,7 @@ public class Post {
     private String content;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Warsaw")
-    private LocalDateTime lastUpdate;
+    private LocalDateTime dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
@@ -40,12 +40,12 @@ public class Post {
         this.content = content;
     }
 
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public User getUser() {

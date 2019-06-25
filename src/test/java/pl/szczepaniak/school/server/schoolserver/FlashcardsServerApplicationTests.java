@@ -1,4 +1,4 @@
-package pl.sykisoft.flashcards.server.flashcardsserver;
+package pl.szczepaniak.school.server.schoolserver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

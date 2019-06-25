@@ -1,16 +1,12 @@
-package pl.sykisoft.flashcards.server.flashcardsserver.controller;
+package pl.szczepaniak.school.server.schoolserver.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import pl.sykisoft.flashcards.server.flashcardsserver.domain.UserDto;
-import pl.sykisoft.flashcards.server.flashcardsserver.model.User;
-import pl.sykisoft.flashcards.server.flashcardsserver.repository.UserRepository;
+import pl.szczepaniak.school.server.schoolserver.domain.UserDto;
+import pl.szczepaniak.school.server.schoolserver.model.User;
 
 import javax.validation.Valid;
 
@@ -47,6 +43,8 @@ public class UserController extends AbstractController {
                 .map(question -> {
                     question.setName(user.getName());
                     question.setEmail(user.getEmail());
+                    question.setSurname(user.getSurname());
+                    question.setPermissions(user.getPermissions());
                     question.setPassword(user.getPassword());
                     question.setFlashcards(user.getFlashcards());
                     return convert(userRepository.save(question));
@@ -68,6 +66,8 @@ public class UserController extends AbstractController {
         dto.setEmail(user.getEmail());
         dto.setId(user.getId());
         dto.setName(user.getName());
+        dto.setSuname(user.getSurname());
+        dto.setPermission(user.getPermissions());
         dto.setPassword(user.getPassword());
         return dto;
     }

@@ -1,6 +1,4 @@
-package pl.sykisoft.flashcards.server.flashcardsserver.model;
-
-import javafx.geometry.Pos;
+package pl.szczepaniak.school.server.schoolserver.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
