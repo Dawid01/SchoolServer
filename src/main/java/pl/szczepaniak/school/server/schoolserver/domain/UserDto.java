@@ -12,6 +12,8 @@ public class UserDto {
 
     private String password;
 
+    private String photo;
+
     public Long getId() {
         return id;
     }
@@ -58,5 +60,21 @@ public class UserDto {
 
     public void setPermission(int permission) {
         this.permission = permission;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

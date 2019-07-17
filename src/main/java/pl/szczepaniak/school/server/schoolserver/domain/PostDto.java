@@ -8,9 +8,10 @@ public class PostDto {
 
     private Long id;
     private String content;
-    private LocalDateTime dateTime;
-    private User user;
+    private String dateTime;
+    //private User user;
     private int permission;
+    private Long userID;
 
     public Long getId() {
         return id;
@@ -28,21 +29,21 @@ public class PostDto {
         this.content = content;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public int getPermission() {
         return permission;
@@ -50,5 +51,13 @@ public class PostDto {
 
     public void setPermission(int permission) {
         this.permission = permission;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 }

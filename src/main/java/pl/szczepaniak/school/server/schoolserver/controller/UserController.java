@@ -30,6 +30,13 @@ public class UserController extends AbstractController {
         return dto;
     }
 
+//    @GetMapping("/users/{post}")
+//    public UserDto getPostUser() {
+//        User user = getCurrentUser();
+//        UserDto dto = convert(user);
+//        return dto;
+//    }
+
 
     @PostMapping("/users")
     public UserDto createQuestion(@Valid @RequestBody User user) {
@@ -47,6 +54,7 @@ public class UserController extends AbstractController {
                     question.setPermissions(user.getPermissions());
                     question.setPassword(user.getPassword());
                     question.setFlashcards(user.getFlashcards());
+                    question.setPhoto(user.getPhoto());
                     return convert(userRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
     }
@@ -69,6 +77,7 @@ public class UserController extends AbstractController {
         dto.setSuname(user.getSurname());
         dto.setPermission(user.getPermissions());
         dto.setPassword(user.getPassword());
+        dto.setPhoto(user.getPhoto());
         return dto;
     }
 }

@@ -13,16 +13,19 @@ public class Post {
     private Long id;
 
     @Lob
-    @Column(name="CONTENT", length=512)
+    @Column(name="content", length=512)
     private String content;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Warsaw")
-    private LocalDateTime dateTime;
+    @Lob
+    @Column(name="date", length=512)
+    private String dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
     private int permission;
+
+    private Long userID;
 
     public Long getId() {
         return id;
@@ -40,11 +43,11 @@ public class Post {
         this.content = content;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -62,5 +65,13 @@ public class Post {
 
     public void setPermission(int permission) {
         this.permission = permission;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 }

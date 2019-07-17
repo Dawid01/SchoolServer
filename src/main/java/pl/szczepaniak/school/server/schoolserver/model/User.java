@@ -21,6 +21,8 @@ public class User {
 
     private int permissions;
 
+    private String photo;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
 
@@ -86,5 +88,13 @@ public class User {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
