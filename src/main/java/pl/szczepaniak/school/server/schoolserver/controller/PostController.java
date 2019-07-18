@@ -9,6 +9,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.szczepaniak.school.server.schoolserver.domain.PostDto;
+import pl.szczepaniak.school.server.schoolserver.domain.UserDto;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
 import pl.szczepaniak.school.server.schoolserver.model.User;
 import pl.szczepaniak.school.server.schoolserver.repository.PostRepositiry;
@@ -43,7 +44,8 @@ public class PostController extends AbstractController {
         post.setUserID(getCurrentUser().getId());
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Calendar cal = Calendar.getInstance();
-        post.setDateTime("test");
+        String time = dateFormat.format(cal.getTime());
+        post.setDateTime(time);
         return convert(postRepository.save(post));
     }
 
@@ -80,7 +82,16 @@ public class PostController extends AbstractController {
         dto.setContent(post.getContent());
         dto.setPermission(post.getPermission());
         dto.setUserID(post.getUserID());
-        //dto.setUser(post.getUser());
+        UserDto userDto = new UserDto();
+        User user = post.getUser();
+        userDto.setId(user.getId());
+        userDto.setName(user.getName());
+        userDto.setSuname(user.getSurname());
+        userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
+        userDto.setPhoto(user.getPhoto());
+        userDto.setPermission(user.getPermissions());
+        dto.setUser(userDto);
         return dto;
     }
 }

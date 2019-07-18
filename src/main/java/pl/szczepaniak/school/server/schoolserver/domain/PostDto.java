@@ -9,7 +9,7 @@ public class PostDto {
     private Long id;
     private String content;
     private String dateTime;
-    //private User user;
+    private UserDto user;
     private int permission;
     private Long userID;
 
@@ -37,13 +37,13 @@ public class PostDto {
         this.dateTime = dateTime;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
+    }
 
     public int getPermission() {
         return permission;
