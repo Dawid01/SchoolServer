@@ -2,9 +2,7 @@ package pl.szczepaniak.school.server.schoolserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +10,7 @@ import pl.szczepaniak.school.server.schoolserver.domain.PostDto;
 import pl.szczepaniak.school.server.schoolserver.domain.UserDto;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
 import pl.szczepaniak.school.server.schoolserver.model.User;
-import pl.szczepaniak.school.server.schoolserver.repository.PostRepositiry;
+import pl.szczepaniak.school.server.schoolserver.repository.PostRepository;
 
 import javax.validation.Valid;
 import java.text.DateFormat;
@@ -23,14 +21,7 @@ import java.util.Calendar;
 public class PostController extends AbstractController {
 
     @Autowired
-    private PostRepositiry postRepository;
-
-//    @GetMapping("/posts")
-//    public Page<PostDto> getPosts(Pageable pageable) {
-//        User user = getCurrentUser();
-//        return postRepository.findUsersPost(user.getId(),pageable).map(this::convert);
-//    }
-
+    private PostRepository postRepository;
 
     @GetMapping("/posts")
     public Page<PostDto> getAllPosts(Pageable pageable) {

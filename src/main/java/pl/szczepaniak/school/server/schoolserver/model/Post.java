@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -26,6 +27,7 @@ public class Post {
     private int permission;
 
     private Long userID;
+
 
     public Long getId() {
         return id;
@@ -74,4 +76,5 @@ public class Post {
     public void setUserID(Long userID) {
         this.userID = userID;
     }
+
 }

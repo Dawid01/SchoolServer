@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
 import pl.szczepaniak.school.server.schoolserver.model.User;
-import pl.szczepaniak.school.server.schoolserver.repository.PostRepositiry;
+import pl.szczepaniak.school.server.schoolserver.repository.PostRepository;
 import pl.szczepaniak.school.server.schoolserver.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class SchoolServerApplication {
@@ -17,9 +20,7 @@ public class SchoolServerApplication {
     private UserRepository userRepository;
 
     @Autowired
-    private PostRepositiry postRepositiry;
-
-
+    private PostRepository postRepositiry;
 
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
@@ -30,7 +31,6 @@ public class SchoolServerApplication {
     InitializingBean sendDatabase() {
         return () -> {
             initUser();
-            initFlashCards();
         };
     }
 
@@ -62,7 +62,7 @@ public class SchoolServerApplication {
         post1.setPermission(0);
         post1.setDateTime("01.07.2019");
         post1.setUserID(user.getId());
-        post1 = postRepositiry.save(post1);
+        postRepositiry.save(post1);
 
         user2 = userRepository.save(user2);
         Post post2 =  new Post();
@@ -71,7 +71,7 @@ public class SchoolServerApplication {
         post2.setPermission(0);
         post2.setDateTime("01.07.2019");
         post2.setUserID(user2.getId());
-        post2 = postRepositiry.save(post2);
+        postRepositiry.save(post2);
 
         user3 = userRepository.save(user3);
         Post post3 =  new Post();
@@ -80,12 +80,12 @@ public class SchoolServerApplication {
         post3.setPermission(0);
         post3.setDateTime("01.07.2019");
         post3.setUserID(user3.getId());
-        post3 = postRepositiry.save(post3);
-
-    }
-
-    private void initFlashCards()
-    {
+        List<String> images = new ArrayList<>();
+        images.add("http://hdwpro.com/wp-content/uploads/2018/12/Top-Bugatti-Chiron.jpg");
+        images.add("https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwi9hcft4MHjAhXlx6YKHZ_GBjcQjRx6BAgBEAU&url=http%3A%2F%2Fimaganationface.org%2Fhd-images-of-super-cars-and-bikes%2F&psig=AOvVaw3fZfZ3zcCwXe5X5fX4uLmk&ust=1563652094072695");
+        images.add("https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwi33pKp4cHjAhVIzqYKHbAyA1kQjRx6BAgBEAU&url=https%3A%2F%2Fautoekspress.al%2Fford-mustang-shelby-gt500-e-2020-es-pershendet-hellcats-dhe-camaros-me-te-pakten-700-kuaj-fuqi%2F&psig=AOvVaw3GnQPAS67JXOYYAEl-a0p-&ust=1563652329325094");
+        images.add("https://cnet4.cbsistatic.com/img/QNyEq1zWTqUwGACe8fTKLv4K1us=/980x551/2019/01/13/53d3ba47-59df-4f54-bcc4-3af9f228f578/2020-ford-mustang-shelby-gt500-detroit-auto-show-46.jpg");
+        postRepositiry.save(post3);
 
     }
 

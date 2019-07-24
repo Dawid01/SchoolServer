@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
 
-public interface  PostRepositiry extends JpaRepository<Post,Long> {
+public interface PostRepository extends JpaRepository<Post,Long> {
 
     @Query(value = "SELECT p FROM Post p WHERE p.user.id =:userId",
         countQuery = "SELECT count(p) FROM Post p WHERE p.user.id =:userId",

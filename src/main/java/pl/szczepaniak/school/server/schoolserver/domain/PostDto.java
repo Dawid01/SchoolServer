@@ -1,8 +1,8 @@
 package pl.szczepaniak.school.server.schoolserver.domain;
 
-import pl.szczepaniak.school.server.schoolserver.model.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PostDto {
 
@@ -60,4 +60,5 @@ public class PostDto {
     public void setUserID(Long userID) {
         this.userID = userID;
     }
+
 }
