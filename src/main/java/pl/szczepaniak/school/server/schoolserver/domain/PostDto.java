@@ -12,6 +12,8 @@ public class PostDto {
     private UserDto user;
     private int permission;
     private Long userID;
+    String[] photos;
+
 
     public Long getId() {
         return id;
@@ -61,4 +63,11 @@ public class PostDto {
         this.userID = userID;
     }
 
+    public String[] getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String[] photos) {
+        this.photos = photos;
+    }
 }

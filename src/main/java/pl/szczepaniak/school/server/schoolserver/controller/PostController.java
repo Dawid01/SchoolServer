@@ -50,6 +50,7 @@ public class PostController extends AbstractController {
                     question.setDateTime(post.getDateTime());
                     question.setUserID(post.getUserID());
                     question.setUser(post.getUser());
+                    question.setPhotos(post.getPhotos());
                     return convert(postRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("Post not found with id " + postId));
     }
@@ -73,6 +74,7 @@ public class PostController extends AbstractController {
         dto.setContent(post.getContent());
         dto.setPermission(post.getPermission());
         dto.setUserID(post.getUserID());
+        dto.setPhotos(post.getPhotos());
         UserDto userDto = new UserDto();
         User user = post.getUser();
         userDto.setId(user.getId());

@@ -1,6 +1,7 @@
 package pl.szczepaniak.school.server.schoolserver.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +28,9 @@ public class Post {
     private int permission;
 
     private Long userID;
+
+    @Value("${photos}")
+    String[] photos;
 
 
     public Long getId() {
@@ -77,4 +81,11 @@ public class Post {
         this.userID = userID;
     }
 
+    public String[] getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String[] photos) {
+        this.photos = photos;
+    }
 }

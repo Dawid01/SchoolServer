@@ -62,6 +62,9 @@ public class SchoolServerApplication {
         post1.setPermission(0);
         post1.setDateTime("01.07.2019");
         post1.setUserID(user.getId());
+        String[] photos1 = new String[1];
+        photos1[0] = "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
+        post1.setPhotos(photos1);
         postRepositiry.save(post1);
 
         user2 = userRepository.save(user2);
@@ -71,20 +74,46 @@ public class SchoolServerApplication {
         post2.setPermission(0);
         post2.setDateTime("01.07.2019");
         post2.setUserID(user2.getId());
-        postRepositiry.save(post2);
+        String[] photos2 = new String[9];
+        photos2[0] = "https://images.unsplash.com/photo-1531804055935-76f44d7c3621?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
+        photos2[1] = "https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_960_720.jpg";
+        photos2[2] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
+        photos2[3] = "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
+        photos2[4] = "https://www.designboom.com/wp-content/uploads/2018/09/photos-burning-man-2018-designboom-1.jpg";
+        photos2[5] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4R7pF91TTryDvBS00aHt9nYWQVybgKCDj-0rdky6buOpFufwbmQ";
+        photos2[6] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
+        photos2[7] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
+        photos2[8] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
 
+
+//        photos2[0] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/7-auf46rxr.png";
+//        photos2[1] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/4-vfw5mhuv.png";
+//        photos2[2] = "https://img.itch.zone/aW1nLzIzOTkxOTgucG5n/original/V2Zpjm.png";
+//        photos2[3] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/16-yurt5gur.png";
+//        photos2[4] = "https://m.gjcdn.net/screenshot-thumbnail/1000x2000/729860-v4.jpg";
+//        photos2[5] = "https://m.gjcdn.net/screenshot-thumbnail/1000x2000/729864-v4.jpg";
+//        photos2[6] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/14-ifpucdf3.png";
+//        photos2[7] = "https://img.itch.zone/aW1nLzIzOTkxOTgucG5n/original/V2Zpjm.png";
+//        photos2[8] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/14-ifpucdf3.png";
+
+
+        post2.setPhotos(photos2);
+        postRepositiry.save(post2);
         user3 = userRepository.save(user3);
         Post post3 =  new Post();
         post3.setUser(user3);
         post3.setContent("Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker. Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).");
         post3.setPermission(0);
         post3.setDateTime("01.07.2019");
+        String[] photos3 = new String[4];
+        photos3[0] = "http://hdwpro.com/wp-content/uploads/2018/12/Top-Bugatti-Chiron.jpg";
+        photos3[1] = "https://cnet4.cbsistatic.com/img/QNyEq1zWTqUwGACe8fTKLv4K1us=/980x551/2019/01/13/53d3ba47-59df-4f54-bcc4-3af9f228f578/2020-ford-mustang-shelby-gt500-detroit-auto-show-46.jpg";
+        photos3[2] = "https://images.unsplash.com/photo-1531804055935-76f44d7c3621?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
+        photos3[3] = "https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_960_720.jpg";
+//        photos3[4] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
+        post3.setPhotos(photos3);
         post3.setUserID(user3.getId());
         List<String> images = new ArrayList<>();
-        images.add("http://hdwpro.com/wp-content/uploads/2018/12/Top-Bugatti-Chiron.jpg");
-        images.add("https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwi9hcft4MHjAhXlx6YKHZ_GBjcQjRx6BAgBEAU&url=http%3A%2F%2Fimaganationface.org%2Fhd-images-of-super-cars-and-bikes%2F&psig=AOvVaw3fZfZ3zcCwXe5X5fX4uLmk&ust=1563652094072695");
-        images.add("https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwi33pKp4cHjAhVIzqYKHbAyA1kQjRx6BAgBEAU&url=https%3A%2F%2Fautoekspress.al%2Fford-mustang-shelby-gt500-e-2020-es-pershendet-hellcats-dhe-camaros-me-te-pakten-700-kuaj-fuqi%2F&psig=AOvVaw3GnQPAS67JXOYYAEl-a0p-&ust=1563652329325094");
-        images.add("https://cnet4.cbsistatic.com/img/QNyEq1zWTqUwGACe8fTKLv4K1us=/980x551/2019/01/13/53d3ba47-59df-4f54-bcc4-3af9f228f578/2020-ford-mustang-shelby-gt500-detroit-auto-show-46.jpg");
         postRepositiry.save(post3);
 
     }
