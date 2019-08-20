@@ -1,7 +1,7 @@
 package pl.szczepaniak.school.server.schoolserver.domain;
 
+import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDto {
@@ -13,6 +13,7 @@ public class PostDto {
     private int permission;
     private Long userID;
     String[] photos;
+    private List<PostReactionDto> postReactions;
 
 
     public Long getId() {
@@ -69,5 +70,13 @@ public class PostDto {
 
     public void setPhotos(String[] photos) {
         this.photos = photos;
+    }
+
+    public List<PostReactionDto> getPostReactions() {
+        return postReactions;
+    }
+
+    public void setPostReactions(List<PostReactionDto> postReactions) {
+        this.postReactions = postReactions;
     }
 }

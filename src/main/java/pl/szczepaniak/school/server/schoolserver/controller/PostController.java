@@ -7,15 +7,19 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.szczepaniak.school.server.schoolserver.domain.PostDto;
+import pl.szczepaniak.school.server.schoolserver.domain.PostReactionDto;
 import pl.szczepaniak.school.server.schoolserver.domain.UserDto;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
+import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
 import pl.szczepaniak.school.server.schoolserver.model.User;
 import pl.szczepaniak.school.server.schoolserver.repository.PostRepository;
 
 import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @RestController
 public class PostController extends AbstractController {
@@ -33,6 +37,7 @@ public class PostController extends AbstractController {
     public PostDto createQuestion(@Valid @RequestBody Post post) {
         post.setUser(getCurrentUser());
         post.setUserID(getCurrentUser().getId());
+        post.setPostReactions(post.getPostReactions());
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Calendar cal = Calendar.getInstance();
         String time = dateFormat.format(cal.getTime());
@@ -51,6 +56,7 @@ public class PostController extends AbstractController {
                     question.setUserID(post.getUserID());
                     question.setUser(post.getUser());
                     question.setPhotos(post.getPhotos());
+                    question.setPostReactions(post.getPostReactions());
                     return convert(postRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("Post not found with id " + postId));
     }
@@ -85,6 +91,34 @@ public class PostController extends AbstractController {
         userDto.setPhoto(user.getPhoto());
         userDto.setPermission(user.getPermissions());
         dto.setUser(userDto);
+        List<PostReactionDto> reactionDtoList = new ArrayList<>();
+        List<PostReaction> reactions = post.getPostReactions();
+
+//        try{
+//            reactions = post.getPostReactions();
+//        }catch (NullPointerException e){}
+
+        if(reactions != null) {
+            for (PostReaction r : reactions) {
+                PostReactionDto d = new PostReactionDto();
+                d.setId(r.getId());
+                d.setUserID(r.getUserID());
+                d.setReaction(r.getReaction());
+                reactionDtoList.add(d);
+
+            }
+        }
+
+//        for(int i = 0; i < reactions.size(); i++){
+//            PostReaction r = reactions.get(i);
+//            PostReactionDto d = new PostReactionDto();
+//            d.setId(r.getId());
+//            d.setUserID(r.getUserID());
+//            d.setReaction(r.getReaction());
+//            reactionDtoList.add(d);
+//        }
+        dto.setPostReactions(reactionDtoList);
+
         return dto;
     }
 }

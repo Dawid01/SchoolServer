@@ -32,6 +32,9 @@ public class Post {
     @Value("${photos}")
     String[] photos;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    private List<PostReaction> postReactions;
+
 
     public Long getId() {
         return id;
@@ -87,5 +90,13 @@ public class Post {
 
     public void setPhotos(String[] photos) {
         this.photos = photos;
+    }
+
+    public List<PostReaction> getPostReactions() {
+        return postReactions;
+    }
+
+    public void setPostReactions(List<PostReaction> postReactions) {
+        this.postReactions = postReactions;
     }
 }

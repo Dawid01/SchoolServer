@@ -6,7 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
+import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
 import pl.szczepaniak.school.server.schoolserver.model.User;
+import pl.szczepaniak.school.server.schoolserver.repository.PostReactionRepository;
 import pl.szczepaniak.school.server.schoolserver.repository.PostRepository;
 import pl.szczepaniak.school.server.schoolserver.repository.UserRepository;
 
@@ -22,6 +24,9 @@ public class SchoolServerApplication {
     @Autowired
     private PostRepository postRepositiry;
 
+    @Autowired
+    private PostReactionRepository reactionRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
     }
@@ -35,12 +40,12 @@ public class SchoolServerApplication {
     }
 
     private void initUser() {
-        User user = new User();
-        user.setEmail("johnrambo@gmail.com");
-        user.setName("John");
-        user.setSurname("Rambo");
-        user.setPassword("12345678");
-        user.setPhoto("https://vignette.wikia.nocookie.net/deadliestfiction/images/c/c5/Rambo.jpg/revision/latest?cb=20141007212329");
+        User user1 = new User();
+        user1.setEmail("johnrambo@gmail.com");
+        user1.setName("John");
+        user1.setSurname("Rambo");
+        user1.setPassword("12345678");
+        user1.setPhoto("https://vignette.wikia.nocookie.net/deadliestfiction/images/c/c5/Rambo.jpg/revision/latest?cb=20141007212329");
         User user2 = new User();
         user2.setEmail("example@gmail.com");
         user2.setName("name");
@@ -55,13 +60,13 @@ public class SchoolServerApplication {
         user3.setPhoto("http://giphygifs.s3.amazonaws.com/media/7kn27lnYSAE9O/giphy.gif");
 
 
-        user = userRepository.save(user);
+        user1 = userRepository.save(user1);
         Post post1 =  new Post();
-        post1.setUser(user);
+        post1.setUser(user1);
         post1.setContent("Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker. Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).");
         post1.setPermission(0);
         post1.setDateTime("01.07.2019");
-        post1.setUserID(user.getId());
+        post1.setUserID(user1.getId());
         String[] photos1 = new String[1];
         photos1[0] = "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
         post1.setPhotos(photos1);
@@ -113,9 +118,13 @@ public class SchoolServerApplication {
 //        photos3[4] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
         post3.setPhotos(photos3);
         post3.setUserID(user3.getId());
-        List<String> images = new ArrayList<>();
+        PostReaction[] postReactions3 =  new PostReaction[3];
+
         postRepositiry.save(post3);
 
+        reactionRepository.save(new PostReaction(1,user1.getId(),post3));
+        reactionRepository.save(new PostReaction(1,user2.getId(),post3));
+        reactionRepository.save(new PostReaction(0,user3.getId(),post3));
     }
 
 }
