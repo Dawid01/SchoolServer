@@ -32,6 +32,11 @@ public class PostController extends AbstractController {
         return postRepository.findAll(pageable).map(this::convert);
     }
 
+    @GetMapping("/posts/{id}")
+    public PostDto getPostByID(@PathVariable Long id){
+        Post post = getPostById(id);
+        return convert(post);
+    }
 
     @PostMapping("/posts")
     public PostDto createQuestion(@Valid @RequestBody Post post) {
@@ -94,10 +99,6 @@ public class PostController extends AbstractController {
         List<PostReactionDto> reactionDtoList = new ArrayList<>();
         List<PostReaction> reactions = post.getPostReactions();
 
-//        try{
-//            reactions = post.getPostReactions();
-//        }catch (NullPointerException e){}
-
         if(reactions != null) {
             for (PostReaction r : reactions) {
                 PostReactionDto d = new PostReactionDto();
@@ -109,14 +110,6 @@ public class PostController extends AbstractController {
             }
         }
 
-//        for(int i = 0; i < reactions.size(); i++){
-//            PostReaction r = reactions.get(i);
-//            PostReactionDto d = new PostReactionDto();
-//            d.setId(r.getId());
-//            d.setUserID(r.getUserID());
-//            d.setReaction(r.getReaction());
-//            reactionDtoList.add(d);
-//        }
         dto.setPostReactions(reactionDtoList);
 
         return dto;

@@ -36,6 +36,9 @@ public class Post {
     private List<PostReaction> postReactions;
 
 
+    public Post() {
+    }
+
     public Long getId() {
         return id;
     }

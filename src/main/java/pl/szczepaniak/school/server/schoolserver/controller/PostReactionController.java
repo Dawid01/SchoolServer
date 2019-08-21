@@ -7,9 +7,14 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.szczepaniak.school.server.schoolserver.domain.PostReactionDto;
+import pl.szczepaniak.school.server.schoolserver.model.Post;
 import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
+import pl.szczepaniak.school.server.schoolserver.model.User;
 import pl.szczepaniak.school.server.schoolserver.repository.PostReactionRepository;
+import pl.szczepaniak.school.server.schoolserver.repository.PostRepository;
+
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class PostReactionController extends AbstractController {
@@ -25,6 +30,36 @@ public class PostReactionController extends AbstractController {
 //    @GetMapping("/reactions/{id}")
 //    public Page<PostReactionDto> gettByPost(@PathVariable Long id) {
 //        return reactionRepository.findByPost(id).map(this::convert);
+
+
+    @PostMapping("/reactions/post/{id}")
+    public PostReactionDto setPostReaction(@Valid @RequestBody PostReaction reaction, @PathVariable Long id){
+
+        Long userId = getCurrentUser().getId();
+        Post post = getPostById(id);
+        List<PostReaction> reactions = post.getPostReactions();
+        PostReaction postReaction = new PostReaction();
+
+        if(reactions != null && reactions.size() != 0) {
+            for (PostReaction r : reactions) {
+
+                if (r.getUserID() == userId) {
+                    if (r.getReaction() == reaction.getReaction()) {
+                        deleteQuestion(r.getId());
+                        return convert(reactionRepository.save(postReaction));
+                    } else {
+                        r.setReaction(reaction.getReaction());
+                        postReaction = r;
+                        deleteQuestion(r.getId());
+                        return convert(reactionRepository.save(postReaction));
+                    }
+                }
+            }
+        }
+        reaction.setPost(post);
+        reaction.setUserID(userId);
+        return convert(reactionRepository.save(reaction));
+    }
 
 
     @PostMapping("/reactions")
