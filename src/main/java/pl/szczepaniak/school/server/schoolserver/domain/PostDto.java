@@ -1,5 +1,6 @@
 package pl.szczepaniak.school.server.schoolserver.domain;
 
+import pl.szczepaniak.school.server.schoolserver.model.Comment;
 import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public class PostDto {
     private Long userID;
     String[] photos;
     private List<PostReactionDto> postReactions;
+    private List<CommentDto> comments;
+
 
 
     public Long getId() {
@@ -78,5 +81,13 @@ public class PostDto {
 
     public void setPostReactions(List<PostReactionDto> postReactions) {
         this.postReactions = postReactions;
+    }
+
+    public List<CommentDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDto> comments) {
+        this.comments = comments;
     }
 }

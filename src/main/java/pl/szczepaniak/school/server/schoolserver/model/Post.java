@@ -35,6 +35,9 @@ public class Post {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     private List<PostReaction> postReactions;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
+    private List<Comment> comments;
+
 
     public Post() {
     }
@@ -101,5 +104,13 @@ public class Post {
 
     public void setPostReactions(List<PostReaction> postReactions) {
         this.postReactions = postReactions;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

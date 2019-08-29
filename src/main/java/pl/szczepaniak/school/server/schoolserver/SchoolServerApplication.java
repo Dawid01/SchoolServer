@@ -5,15 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import pl.szczepaniak.school.server.schoolserver.model.Comment;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
 import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
 import pl.szczepaniak.school.server.schoolserver.model.User;
+import pl.szczepaniak.school.server.schoolserver.repository.CommentRepository;
 import pl.szczepaniak.school.server.schoolserver.repository.PostReactionRepository;
 import pl.szczepaniak.school.server.schoolserver.repository.PostRepository;
 import pl.szczepaniak.school.server.schoolserver.repository.UserRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class SchoolServerApplication {
@@ -26,6 +25,9 @@ public class SchoolServerApplication {
 
     @Autowired
     private PostReactionRepository reactionRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
@@ -89,21 +91,10 @@ public class SchoolServerApplication {
         photos2[6] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
         photos2[7] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
         photos2[8] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
-
-
-//        photos2[0] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/7-auf46rxr.png";
-//        photos2[1] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/4-vfw5mhuv.png";
-//        photos2[2] = "https://img.itch.zone/aW1nLzIzOTkxOTgucG5n/original/V2Zpjm.png";
-//        photos2[3] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/16-yurt5gur.png";
-//        photos2[4] = "https://m.gjcdn.net/screenshot-thumbnail/1000x2000/729860-v4.jpg";
-//        photos2[5] = "https://m.gjcdn.net/screenshot-thumbnail/1000x2000/729864-v4.jpg";
-//        photos2[6] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/14-ifpucdf3.png";
-//        photos2[7] = "https://img.itch.zone/aW1nLzIzOTkxOTgucG5n/original/V2Zpjm.png";
-//        photos2[8] = "https://i.gjcdn.net/data/games/6/184/433184/media/game-description/14-ifpucdf3.png";
-
-
         post2.setPhotos(photos2);
         postRepositiry.save(post2);
+
+
         user3 = userRepository.save(user3);
         Post post3 =  new Post();
         post3.setUser(user3);
@@ -115,16 +106,18 @@ public class SchoolServerApplication {
         photos3[1] = "https://cnet4.cbsistatic.com/img/QNyEq1zWTqUwGACe8fTKLv4K1us=/980x551/2019/01/13/53d3ba47-59df-4f54-bcc4-3af9f228f578/2020-ford-mustang-shelby-gt500-detroit-auto-show-46.jpg";
         photos3[2] = "https://images.unsplash.com/photo-1531804055935-76f44d7c3621?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
         photos3[3] = "https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_960_720.jpg";
-//        photos3[4] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
         post3.setPhotos(photos3);
         post3.setUserID(user3.getId());
-        PostReaction[] postReactions3 =  new PostReaction[3];
-
         postRepositiry.save(post3);
 
         reactionRepository.save(new PostReaction(1,user1.getId(),post3));
         reactionRepository.save(new PostReaction(1,user2.getId(),post3));
         reactionRepository.save(new PostReaction(0,user3.getId(),post3));
+
+        commentRepository.save(new Comment("Cool", user1.getId(), "01.07.2019", post3));
+        commentRepository.save(new Comment("Nice, Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym.", user2.getId(), "01.07.2019", post3));
+        commentRepository.save(new Comment("Good Luck", user3.getId(), "01.07.2019", post3));
+
     }
 
 }

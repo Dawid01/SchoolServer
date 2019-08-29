@@ -27,11 +27,6 @@ public class PostReactionController extends AbstractController {
         return reactionRepository.findAll(pageable).map(this::convert);
     }
 
-//    @GetMapping("/reactions/{id}")
-//    public Page<PostReactionDto> gettByPost(@PathVariable Long id) {
-//        return reactionRepository.findByPost(id).map(this::convert);
-
-
     @PostMapping("/reactions/post/{id}")
     public PostReactionDto setPostReaction(@Valid @RequestBody PostReaction reaction, @PathVariable Long id){
 

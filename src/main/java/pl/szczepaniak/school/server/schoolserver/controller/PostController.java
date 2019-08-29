@@ -6,9 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.szczepaniak.school.server.schoolserver.domain.CommentDto;
 import pl.szczepaniak.school.server.schoolserver.domain.PostDto;
 import pl.szczepaniak.school.server.schoolserver.domain.PostReactionDto;
 import pl.szczepaniak.school.server.schoolserver.domain.UserDto;
+import pl.szczepaniak.school.server.schoolserver.model.Comment;
 import pl.szczepaniak.school.server.schoolserver.model.Post;
 import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
 import pl.szczepaniak.school.server.schoolserver.model.User;
@@ -47,6 +49,7 @@ public class PostController extends AbstractController {
         Calendar cal = Calendar.getInstance();
         String time = dateFormat.format(cal.getTime());
         post.setDateTime(time);
+        post.setComments(post.getComments());
         return convert(postRepository.save(post));
     }
 
@@ -62,6 +65,7 @@ public class PostController extends AbstractController {
                     question.setUser(post.getUser());
                     question.setPhotos(post.getPhotos());
                     question.setPostReactions(post.getPostReactions());
+                    question.setComments(post.getComments());
                     return convert(postRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("Post not found with id " + postId));
     }
@@ -109,8 +113,22 @@ public class PostController extends AbstractController {
 
             }
         }
-
         dto.setPostReactions(reactionDtoList);
+
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        List<Comment> comments = post.getComments();
+
+        if(comments != null) {
+            for (Comment c : comments) {
+                CommentDto d = new CommentDto();
+                d.setId(c.getId());
+                d.setContent(c.getContent());
+                d.setDateTime(c.getDateTime());
+                d.setUserID(c.getUserID());
+                commentDtoList.add(d);
+            }
+        }
+        dto.setComments(commentDtoList);
 
         return dto;
     }
