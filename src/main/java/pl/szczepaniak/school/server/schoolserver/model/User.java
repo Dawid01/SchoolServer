@@ -26,13 +26,6 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
 
-    public List<Post> getFlashcards() {
-        return posts;
-    }
-
-    public void setFlashcards(List<Post> flashcards) {
-        this.posts = flashcards;
-    }
 
     public Long getId() {
         return id;

@@ -53,7 +53,7 @@ public class UserController extends AbstractController {
                     question.setSurname(user.getSurname());
                     question.setPermissions(user.getPermissions());
                     question.setPassword(user.getPassword());
-                    question.setFlashcards(user.getFlashcards());
+                    question.setPosts(user.getPosts());
                     question.setPhoto(user.getPhoto());
                     return convert(userRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));

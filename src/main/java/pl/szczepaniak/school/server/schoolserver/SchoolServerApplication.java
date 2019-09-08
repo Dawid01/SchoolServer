@@ -5,14 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import pl.szczepaniak.school.server.schoolserver.model.Comment;
-import pl.szczepaniak.school.server.schoolserver.model.Post;
-import pl.szczepaniak.school.server.schoolserver.model.PostReaction;
-import pl.szczepaniak.school.server.schoolserver.model.User;
-import pl.szczepaniak.school.server.schoolserver.repository.CommentRepository;
-import pl.szczepaniak.school.server.schoolserver.repository.PostReactionRepository;
-import pl.szczepaniak.school.server.schoolserver.repository.PostRepository;
-import pl.szczepaniak.school.server.schoolserver.repository.UserRepository;
+import pl.szczepaniak.school.server.schoolserver.model.*;
+import pl.szczepaniak.school.server.schoolserver.repository.*;
+
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class SchoolServerApplication {
@@ -29,6 +25,12 @@ public class SchoolServerApplication {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private GameRepository gameRepository;
+
+    @Autowired
+    private GameScoreRepository gameScoreRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
     }
@@ -42,6 +44,16 @@ public class SchoolServerApplication {
     }
 
     private void initUser() {
+
+        User guest = new User();
+        guest.setEmail("guest@ezn.pl");
+        guest.setName("guest");
+        guest.setPassword("guest");
+        guest.setPhoto("https://www.wykop.pl/cdn/c3397992/anonimowy-anonim_HKw17T8zG1,q250.jpg");
+        guest.setPermissions(100);
+        guest.setSurname("");
+        userRepository.save(guest);
+
         User user1 = new User();
         user1.setEmail("johnrambo@gmail.com");
         user1.setName("John");
@@ -117,6 +129,12 @@ public class SchoolServerApplication {
         commentRepository.save(new Comment("Cool", user1.getId(), "01.07.2019", post3));
         commentRepository.save(new Comment("Nice, Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym.", user2.getId(), "01.07.2019", post3));
         commentRepository.save(new Comment("Good Luck", user3.getId(), "01.07.2019", post3));
+
+        Game binaryGame = new Game("Binary Game", new ArrayList<>());
+        gameRepository.save(binaryGame);
+        gameScoreRepository.save(new GameScore(84, user2.getId(), binaryGame));
+        gameScoreRepository.save(new GameScore(14, user3.getId(), binaryGame));
+
 
     }
 
