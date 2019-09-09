@@ -9,6 +9,7 @@ import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class SchoolServerApplication {
@@ -30,6 +31,12 @@ public class SchoolServerApplication {
 
     @Autowired
     private GameScoreRepository gameScoreRepository;
+
+    @Autowired
+    private LessonPlanRepository lessonPlanRepository;
+
+    @Autowired
+    private  LessonRepositiry lessonRepositiry;
 
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
@@ -134,6 +141,36 @@ public class SchoolServerApplication {
         gameRepository.save(binaryGame);
         gameScoreRepository.save(new GameScore(84, user2.getId(), binaryGame));
         gameScoreRepository.save(new GameScore(14, user3.getId(), binaryGame));
+
+        LessonPlan lessonPlan1 = new LessonPlan();
+        lessonPlan1.setName("IIIG");
+        lessonPlanRepository.save(lessonPlan1);
+
+        lessonRepositiry.save(new Lesson(4, "Matematyka", "203", "GD", 1, lessonPlan1));
+        lessonRepositiry.save(new Lesson(5, "Religia / Etyka", "08 / 03", "OJ / JK", 1, lessonPlan1));
+        lessonRepositiry.save(new Lesson(6, "Historia", "101", "TW", 1, lessonPlan1));
+        lessonRepositiry.save(new Lesson(7, "J.Polski", "100", "DA", 1, lessonPlan1));
+        lessonRepositiry.save(new Lesson(8, "Fizyka", "201", "MM", 1, lessonPlan1));
+        lessonRepositiry.save(new Lesson(9, "Zzw", "03", "DA", 1, lessonPlan1));
+
+        lessonRepositiry.save(new Lesson(3, "Matematyka", "202", "GD", 2, lessonPlan1));
+        lessonRepositiry.save(new Lesson(4, "Matematyka", "202", "GD", 2, lessonPlan1));
+        lessonRepositiry.save(new Lesson(5, "Historia", "101", "TW", 2, lessonPlan1));
+        lessonRepositiry.save(new Lesson(6, "J.Ang / PRZERWA NA CKP", "33 / ckp", "PB / ckp", 2, lessonPlan1));
+        lessonRepositiry.save(new Lesson(7, "Wf / Apk. Internetowe", "B / A_210 ckp", "MA / GT", 2, lessonPlan1));
+
+        lessonRepositiry.save(new Lesson(1, "Wf (G_1)", "SGD1", "MA", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(2, "J.Polsko", "103", "DA", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(3, "J.Polsko", "103", "DA", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(4, "Matematyka", "104", "GD", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(5, "Bdai / Psk", "207 / 306", "GT / KU", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(6, "Bdai / Psk", "207 / 306", "GT / KU", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(7, "Psk / Wf", "306 / SGD2", "KU / PE", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(8, "Psk / Wf", "306 / SGD2", "KU / PE", 3, lessonPlan1));
+        lessonRepositiry.save(new Lesson(9, "J.Niemiecki", "29 / 102", "SM / MI", 3, lessonPlan1));
+
+
+
 
 
     }

@@ -1,7 +1,5 @@
 package pl.szczepaniak.school.server.schoolserver.domain;
 
-import pl.szczepaniak.school.server.schoolserver.model.LessonPlan;
-
 public class LessonDto {
 
     private Long id;
@@ -9,8 +7,11 @@ public class LessonDto {
     private String subjectName;
     private String room;
     private String time;
+    private int weekDay;
     private String info;
-    private LessonPlan LessonPlan;
+
+    public LessonDto() {
+    }
 
     public Long getId() {
         return id;
@@ -60,11 +61,12 @@ public class LessonDto {
         this.info = info;
     }
 
-    public pl.szczepaniak.school.server.schoolserver.model.LessonPlan getLessonPlan() {
-        return LessonPlan;
+    public int getWeekDay() {
+        return weekDay;
     }
 
-    public void setLessonPlan(pl.szczepaniak.school.server.schoolserver.model.LessonPlan lessonPlan) {
-        LessonPlan = lessonPlan;
+    public void setWeekDay(int weekDay) {
+        this.weekDay = weekDay;
     }
+
 }

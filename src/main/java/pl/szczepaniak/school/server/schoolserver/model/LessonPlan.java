@@ -12,21 +12,11 @@ public class LessonPlan {
 
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Lesson> mondaylessonList;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lessonPlan")
+    private List<Lesson> lessons;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Lesson> tuesdaylessonList;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Lesson> wednesdaylessonList;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Lesson> thursdaylessonList;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Lesson> fridaylessonList;
-
+    public LessonPlan() {
+    }
 
     public Long getId() {
         return id;
@@ -44,43 +34,11 @@ public class LessonPlan {
         this.name = name;
     }
 
-    public List<Lesson> getMondaylessonList() {
-        return mondaylessonList;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setMondaylessonList(List<Lesson> mondaylessonList) {
-        this.mondaylessonList = mondaylessonList;
-    }
-
-    public List<Lesson> getTuesdaylessonList() {
-        return tuesdaylessonList;
-    }
-
-    public void setTuesdaylessonList(List<Lesson> tuesdaylessonList) {
-        this.tuesdaylessonList = tuesdaylessonList;
-    }
-
-    public List<Lesson> getWednesdaylessonList() {
-        return wednesdaylessonList;
-    }
-
-    public void setWednesdaylessonList(List<Lesson> wednesdaylessonList) {
-        this.wednesdaylessonList = wednesdaylessonList;
-    }
-
-    public List<Lesson> getThursdaylessonList() {
-        return thursdaylessonList;
-    }
-
-    public void setThursdaylessonList(List<Lesson> thursdaylessonList) {
-        this.thursdaylessonList = thursdaylessonList;
-    }
-
-    public List<Lesson> getFridaylessonList() {
-        return fridaylessonList;
-    }
-
-    public void setFridaylessonList(List<Lesson> fridaylessonList) {
-        this.fridaylessonList = fridaylessonList;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

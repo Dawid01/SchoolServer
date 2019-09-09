@@ -48,10 +48,7 @@ public class LessonPlanController extends AbstractController{
         LessonPlanDto dto = new LessonPlanDto();
         dto.setId(lessonPlan.getId());
         dto.setName(lessonPlan.getName());
-        dto.setMondaylessonList(lessonPlan.getMondaylessonList());
-        dto.setTuesdaylessonList(lessonPlan.getTuesdaylessonList());
-        dto.setWednesdaylessonList(lessonPlan.getWednesdaylessonList());
-        dto.setFridaylessonList(lessonPlan.getFridaylessonList());
+        //dto.setLessons(lessonPlan.getLessons());
         return dto;
     }
 }

@@ -26,6 +26,45 @@ public class LessonController {
     @PostMapping("/lessons")
     public LessonDto createQuestion(@Valid @RequestBody Lesson lesson) {
 
+//        switch (lesson.getLessonNumber()){
+//            case 0:
+//                lesson.setTime("7:10 - 7:55");
+//                break;
+//            case 1:
+//                lesson.setTime("8:00 - 8:45");
+//                break;
+//            case 2:
+//                lesson.setTime("8:55 - 9:40");
+//                break;
+//            case 3:
+//                lesson.setTime("9:50 - 10:35");
+//                break;
+//            case 4:
+//                lesson.setTime("10:45 - 11:30");
+//                break;
+//            case 5:
+//                lesson.setTime("11:40 - 12:25");
+//                break;
+//            case 6:
+//                lesson.setTime("12:40 - 13:25");
+//                break;
+//            case 7:
+//                lesson.setTime("13:35 - 14:20");
+//                break;
+//            case 8:
+//                lesson.setTime("14:30 - 15:15");
+//                break;
+//            case 9:
+//                lesson.setTime("15:25 - 16:10");
+//                break;
+//            case 10:
+//                lesson.setTime("16:20 - 17:05");
+//                break;
+//            case 11:
+//                lesson.setTime("17:10 - 17:55");
+//                break;
+//        }
+
         return convert(lessonRepositiry.save(lesson));
     }
 
@@ -56,8 +95,8 @@ public class LessonController {
         dto.setRoom(lesson.getRoom());
         dto.setInfo(lesson.getInfo());
         dto.setLessonNumber(lesson.getLessonNumber());
-        dto.setLessonPlan(lesson.getLessonPlan());
         dto.setSubjectName(lesson.getSubjectName());
+        dto.setWeekDay(lesson.getWeekDay());
         dto.setTime(lesson.getTime());
         return dto;
     }
