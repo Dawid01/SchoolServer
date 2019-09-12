@@ -4,12 +4,19 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import pl.szczepaniak.school.server.schoolserver.files.FileStorageProperties;
 import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+@EnableConfigurationProperties({
+        FileStorageProperties.class
+})
 
 @SpringBootApplication
 public class SchoolServerApplication {
@@ -168,6 +175,31 @@ public class SchoolServerApplication {
         lessonRepositiry.save(new Lesson(7, "Psk / Wf", "306 / SGD2", "KU / PE", 3, lessonPlan1));
         lessonRepositiry.save(new Lesson(8, "Psk / Wf", "306 / SGD2", "KU / PE", 3, lessonPlan1));
         lessonRepositiry.save(new Lesson(9, "J.Niemiecki", "29 / 102", "SM / MI", 3, lessonPlan1));
+
+        lessonRepositiry.save(new Lesson(1, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(2, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(3, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(4, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(5, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(6, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(7, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(8, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(9, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(10, "CKP", "", "", 4, lessonPlan1));
+        lessonRepositiry.save(new Lesson(11, "CKP", "", "", 4, lessonPlan1));
+
+        lessonRepositiry.save(new Lesson(0, "Bdai (G_1)", "207", "GT", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(1, "Bdai (G_1)", "207", "GT", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(2, "Fizyka / Wf", "201 / SGD1", "MM / PE", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(3, "Religia / Etyka", "08 / 03", "OJ / JK", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(4, "J.Angielski", "33 / 202", "PB / KA", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(5, "Bdai (G_2)", "207", "GT", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(6, "Bdai (G_2)", "207", "GT", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(7, "Fizyka (G_2)", "201", "MM", 5, lessonPlan1));
+        lessonRepositiry.save(new Lesson(8, "J.Angielski (G_2)", "34", "KA", 5, lessonPlan1));
+
+
+
 
 
 
