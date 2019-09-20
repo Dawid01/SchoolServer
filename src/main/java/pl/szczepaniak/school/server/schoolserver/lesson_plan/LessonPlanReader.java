@@ -14,14 +14,21 @@ public class LessonPlanReader extends FileNotFoundException {
     private MultipartFile file;
 
     private PeroidRepository peroidRepository;
+    private SubjectRepository subjectRepository;
 
-    public LessonPlanReader(MultipartFile file, PeroidRepository peroidRepository) {
+
+    public LessonPlanReader(MultipartFile file, PeroidRepository peroidRepository, SubjectRepository subjectRepository) {
         this.file = file;
         this.peroidRepository = peroidRepository;
+        this.subjectRepository = subjectRepository;
+
         savePeroids();
+        saveSubjects();
     }
 
     private void savePeroids(){
+
+        peroidRepository.deleteAll();
 
         try {
             String json = new String(file.getBytes());
@@ -39,6 +46,31 @@ public class LessonPlanReader extends FileNotFoundException {
                     peroidRepository.save(period);
                 }
                 System.out.println("Save Peroids");
+            }
+
+        }catch (IOException e){
+
+        }
+    }
+
+    private void saveSubjects(){
+
+        subjectRepository.deleteAll();
+
+        try {
+            String json = new String(file.getBytes());
+            JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+
+            JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("subjects").getAsJsonArray("subject");
+
+            if(jsonPeroids != null) {
+                for (int i = 0; i < jsonPeroids.size(); i++) {
+                    Subject subject = new Subject();
+                    subject.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
+                    subject.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                    subjectRepository.save(subject);
+                }
+                System.out.println("Save Subjects");
             }
 
         }catch (IOException e){
