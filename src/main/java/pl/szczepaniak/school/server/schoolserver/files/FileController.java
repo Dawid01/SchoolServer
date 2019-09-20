@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.core.io.Resource;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.LessonPlanReader;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.PeroidRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -25,6 +27,9 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private PeroidRepository peroidRepository;
+
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -33,6 +38,21 @@ public class FileController {
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("uploadLessonPlan")
+    public UploadFileResponse uploadLessonFile(@RequestParam("file") MultipartFile file){
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/lessonPlanFile/")
+                .path(fileName)
+                .toUriString();
+
+        LessonPlanReader lessonPlanReader =  new LessonPlanReader(file, peroidRepository);
 
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());

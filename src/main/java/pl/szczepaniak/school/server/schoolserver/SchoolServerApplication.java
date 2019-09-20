@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import pl.szczepaniak.school.server.schoolserver.files.FileStorageProperties;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.PeroidRepository;
 import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
 
@@ -45,6 +46,7 @@ public class SchoolServerApplication {
     @Autowired
     private  LessonRepositiry lessonRepositiry;
 
+
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
     }
@@ -79,7 +81,7 @@ public class SchoolServerApplication {
         user2.setName("name");
         user2.setSurname("surname");
         user2.setPassword("12345678");
-        user2.setPhoto("https://www.w3schools.com/howto/img_avatar.png");
+        user2.setPhoto("http://192.168.0.176:8080/downloadFile/ILTQq.png");
         User user3 = new User();
         user3.setEmail("user3@gmail.com");
         user3.setName("User");
@@ -109,7 +111,7 @@ public class SchoolServerApplication {
         post2.setUserID(user2.getId());
         String[] photos2 = new String[9];
         photos2[0] = "https://images.unsplash.com/photo-1531804055935-76f44d7c3621?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
-        photos2[1] = "https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_960_720.jpg";
+        photos2[1] = "http://192.168.0.176:8080/downloadFile/ILTQq.png";
         photos2[2] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
         photos2[3] = "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
         photos2[4] = "https://www.designboom.com/wp-content/uploads/2018/09/photos-burning-man-2018-designboom-1.jpg";
@@ -197,10 +199,6 @@ public class SchoolServerApplication {
         lessonRepositiry.save(new Lesson(6, "Bdai (G_2)", "207", "GT", 5, lessonPlan1));
         lessonRepositiry.save(new Lesson(7, "Fizyka (G_2)", "201", "MM", 5, lessonPlan1));
         lessonRepositiry.save(new Lesson(8, "J.Angielski (G_2)", "34", "KA", 5, lessonPlan1));
-
-
-
-
 
 
 
