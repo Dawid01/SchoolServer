@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class DayDef {
+public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,30 +16,35 @@ public class DayDef {
 
     private String name;
 
-    private String days;
-
-    public DayDef() {
+    public Teacher() {
     }
 
-    public DayDef(String externalID, String name, String days) {
+    public Teacher(String externalID, String name) {
         this.externalID = externalID;
         this.name = name;
-        this.days = days;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getExternalID() {
         return externalID;
+    }
+
+    public void setExternalID(String externalID) {
+        this.externalID = externalID;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDays() {
-        return days;
+    public void setName(String name) {
+        this.name = name;
     }
 }

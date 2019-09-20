@@ -26,7 +26,7 @@ public class SubjectController {
     }
 
     @PutMapping("/subjects/{id}")
-    public SubjectDto updatePeroid(@PathVariable Long subjectId,
+    public SubjectDto updateSubject(@PathVariable Long subjectId,
                                   @Valid @RequestBody Subject subject) {
         return subjectRepository.findById(subjectId)
                 .map(question -> {

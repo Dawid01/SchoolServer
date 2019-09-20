@@ -13,6 +13,7 @@ import org.springframework.core.io.Resource;
 import pl.szczepaniak.school.server.schoolserver.lesson_plan.LessonPlanReader;
 import pl.szczepaniak.school.server.schoolserver.lesson_plan.PeroidRepository;
 import pl.szczepaniak.school.server.schoolserver.lesson_plan.SubjectRepository;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.TeacherRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -33,6 +34,9 @@ public class FileController {
 
     @Autowired
     SubjectRepository subjectRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
 
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
@@ -56,7 +60,7 @@ public class FileController {
                 .path(fileName)
                 .toUriString();
 
-        LessonPlanReader lessonPlanReader =  new LessonPlanReader(file, peroidRepository, subjectRepository);
+        LessonPlanReader lessonPlanReader =  new LessonPlanReader(file, peroidRepository, subjectRepository, teacherRepository);
 
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
