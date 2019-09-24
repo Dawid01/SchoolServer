@@ -20,11 +20,6 @@ public class PeroidController {
         return peroidRepository.findAll(pageable).map(this::convert);
     }
 
-//    @GetMapping("/peroids/{id}")
-//    public PeroidDto getPostByID(@PathVariable Long id){
-//        Period peroid = getPostByID(id);
-//        return convert(peroid);
-//    }
 
     @PostMapping("/peroids")
     public PeroidDto createQuestion(@Valid @RequestBody Period post) {

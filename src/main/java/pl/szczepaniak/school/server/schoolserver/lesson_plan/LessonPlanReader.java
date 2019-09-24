@@ -16,17 +16,20 @@ public class LessonPlanReader extends FileNotFoundException {
     private PeroidRepository peroidRepository;
     private SubjectRepository subjectRepository;
     private TeacherRepository teacherRepository;
+    private ClassRepository classRepository;
 
 
-    public LessonPlanReader(MultipartFile file, PeroidRepository peroidRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository) {
+    public LessonPlanReader(MultipartFile file, PeroidRepository peroidRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, ClassRepository classRepository) {
         this.file = file;
         this.peroidRepository = peroidRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
+        this.classRepository = classRepository;
 
         savePeroids();
         saveSubjects();
         saveTeachers();
+        saveClasses();
     }
 
     private void savePeroids(){
@@ -99,6 +102,31 @@ public class LessonPlanReader extends FileNotFoundException {
                     teacherRepository.save(teacher);
                 }
                 System.out.println("Save Teachers");
+            }
+
+        }catch (IOException e){
+
+        }
+    }
+
+    private  void saveClasses(){
+
+        classRepository.deleteAll();
+
+        try {
+            String json = new String(file.getBytes());
+            JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+
+            JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("classes").getAsJsonArray("class");
+
+            if(jsonPeroids != null) {
+                for (int i = 0; i < jsonPeroids.size(); i++) {
+                    Class c = new Class();
+                    c.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
+                    c.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                    classRepository.save(c);
+                }
+                System.out.println("Save Classes");
             }
 
         }catch (IOException e){
