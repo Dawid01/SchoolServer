@@ -7,12 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import pl.szczepaniak.school.server.schoolserver.files.FileStorageProperties;
-import pl.szczepaniak.school.server.schoolserver.lesson_plan.PeroidRepository;
 import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 @EnableConfigurationProperties({

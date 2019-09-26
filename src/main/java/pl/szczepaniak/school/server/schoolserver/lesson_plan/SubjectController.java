@@ -20,6 +20,11 @@ public class SubjectController {
         return subjectRepository.findAll(pageable).map(this::convert);
     }
 
+    @GetMapping("/subjects/{externalID}")
+    public SubjectDto getByExternalID(@PathVariable String externalID){
+        return  convert(subjectRepository.findByexternalID(externalID));
+    }
+
     @PostMapping("/subjects")
     public SubjectDto createQuestion(@Valid @RequestBody Subject subject) {
         return convert(subjectRepository.save(subject));

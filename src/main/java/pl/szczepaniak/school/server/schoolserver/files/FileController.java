@@ -27,7 +27,7 @@ public class FileController {
     private FileStorageService fileStorageService;
 
     @Autowired
-    private PeroidRepository peroidRepository;
+    private PeriodRepository peroidRepository;
 
     @Autowired
     SubjectRepository subjectRepository;
@@ -37,6 +37,9 @@ public class FileController {
 
     @Autowired
     ClassRepository classRepository;
+
+    @Autowired
+    GroupRepository groupRepository;
 
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
@@ -60,7 +63,7 @@ public class FileController {
                 .path(fileName)
                 .toUriString();
 
-        LessonPlanReader lessonPlanReader =  new LessonPlanReader(file, peroidRepository, subjectRepository, teacherRepository, classRepository);
+        LessonPlanReader lessonPlanReader =  new LessonPlanReader(file, peroidRepository, subjectRepository, teacherRepository, classRepository, groupRepository);
 
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());

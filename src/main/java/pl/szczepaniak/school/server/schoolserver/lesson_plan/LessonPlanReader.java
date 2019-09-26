@@ -3,7 +3,6 @@ package pl.szczepaniak.school.server.schoolserver.lesson_plan;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -13,23 +12,26 @@ public class LessonPlanReader extends FileNotFoundException {
 
     private MultipartFile file;
 
-    private PeroidRepository peroidRepository;
+    private PeriodRepository peroidRepository;
     private SubjectRepository subjectRepository;
     private TeacherRepository teacherRepository;
     private ClassRepository classRepository;
+    private GroupRepository groupRepository;
 
 
-    public LessonPlanReader(MultipartFile file, PeroidRepository peroidRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, ClassRepository classRepository) {
+    public LessonPlanReader(MultipartFile file, PeriodRepository peroidRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, ClassRepository classRepository, GroupRepository groupRepository) {
         this.file = file;
         this.peroidRepository = peroidRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
         this.classRepository = classRepository;
+        this.groupRepository = groupRepository;
 
         savePeroids();
         saveSubjects();
         saveTeachers();
         saveClasses();
+        saveGroups();
     }
 
     private void savePeroids(){
@@ -127,6 +129,32 @@ public class LessonPlanReader extends FileNotFoundException {
                     classRepository.save(c);
                 }
                 System.out.println("Save Classes");
+            }
+
+        }catch (IOException e){
+
+        }
+    }
+
+    void saveGroups(){
+
+        groupRepository.deleteAll();
+
+        try {
+            String json = new String(file.getBytes());
+            JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+
+            JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("groups").getAsJsonArray("group");
+
+            if(jsonPeroids != null) {
+                for (int i = 0; i < jsonPeroids.size(); i++) {
+                    GroupClass group = new GroupClass();
+                    group.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
+                    group.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                    group.setaClass(classRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("_classid").getAsString()));
+                    groupRepository.save(group);
+                }
+                System.out.println("Save Groups");
             }
 
         }catch (IOException e){

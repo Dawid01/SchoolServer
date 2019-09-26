@@ -10,25 +10,31 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-public class PeroidController {
+public class PeriodController {
 
     @Autowired
-    private PeroidRepository peroidRepository;
+    private PeriodRepository peroidRepository;
 
     @GetMapping("/peroids")
-    public Page<PeroidDto> getAllPeroids(Pageable pageable) {
+    public Page<PeriodDto> getAllPeroids(Pageable pageable) {
         return peroidRepository.findAll(pageable).map(this::convert);
     }
 
 
+    @GetMapping("/peroids/{externalID}")
+    public PeriodDto getByExternalID(@PathVariable String externalID){
+        return  convert(peroidRepository.findByexternalID(externalID));
+    }
+
+
     @PostMapping("/peroids")
-    public PeroidDto createQuestion(@Valid @RequestBody Period post) {
+    public PeriodDto createQuestion(@Valid @RequestBody Period post) {
         return convert(peroidRepository.save(post));
     }
 
     @PutMapping("/peroids/{id}")
-    public PeroidDto updatePeroid(@PathVariable Long peroidId,
-                              @Valid @RequestBody Period period) {
+    public PeriodDto updatePeroid(@PathVariable Long peroidId,
+                                  @Valid @RequestBody Period period) {
         return peroidRepository.findById(peroidId)
                 .map(question -> {
                     question.setId(period.getId());
@@ -47,8 +53,8 @@ public class PeroidController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Peroid not found with id " + peroidId));
     }
 
-    private PeroidDto convert(Period period) {
-        PeroidDto dto = new PeroidDto();
+    private PeriodDto convert(Period period) {
+        PeriodDto dto = new PeriodDto();
         dto.setId(period.getId());
         dto.setExternalID(period.getExternalID());
         dto.setStartTime(period.getStartTime());

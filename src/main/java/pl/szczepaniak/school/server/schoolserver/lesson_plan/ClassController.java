@@ -20,6 +20,11 @@ public class ClassController {
         return classRepository.findAll(pageable).map(this::convert);
     }
 
+    @GetMapping("/classes/{externalID}")
+    public ClassDto getByExternalID(@PathVariable String externalID){
+        return  convert(classRepository.findByexternalID(externalID));
+    }
+
 
     @PostMapping("/classes")
     public ClassDto createQuestion(@Valid @RequestBody Class c) {

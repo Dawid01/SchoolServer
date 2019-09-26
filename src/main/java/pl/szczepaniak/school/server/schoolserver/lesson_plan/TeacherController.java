@@ -20,6 +20,11 @@ public class TeacherController {
         return teacherRepository.findAll(pageable).map(this::convert);
     }
 
+    @GetMapping("/teachers/{externalID}")
+    public TeacherDto getByExternalID(@PathVariable String externalID){
+        return  convert(teacherRepository.findByexternalID(externalID));
+    }
+
     @PostMapping("/teachers")
     public TeacherDto createQuestion(@Valid @RequestBody Teacher teacher) {
         return convert(teacherRepository.save(teacher));

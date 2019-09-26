@@ -1,6 +1,6 @@
 package pl.szczepaniak.school.server.schoolserver.lesson_plan;
 
-public class PeroidDto {
+public class PeriodDto {
 
     private Long id;
 
@@ -12,10 +12,10 @@ public class PeroidDto {
 
     private String endTime;
 
-    public PeroidDto() {
+    public PeriodDto() {
     }
 
-    public PeroidDto(String externalID, int peroid, String startTime, String endTime) {
+    public PeriodDto(String externalID, int peroid, String startTime, String endTime) {
         this.externalID = externalID;
         this.period = peroid;
         this.startTime = startTime;

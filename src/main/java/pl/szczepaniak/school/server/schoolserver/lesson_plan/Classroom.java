@@ -1,10 +1,12 @@
 package pl.szczepaniak.school.server.schoolserver.lesson_plan;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-public class Class {
+public class Classroom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,13 +16,10 @@ public class Class {
 
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aClass")
-    private List<GroupClass> groups;
-
-    public Class() {
+    public Classroom() {
     }
 
-    public Class(String externalID, String name) {
+    public Classroom(String externalID, String name) {
         this.externalID = externalID;
         this.name = name;
     }
@@ -47,13 +46,5 @@ public class Class {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<GroupClass> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<GroupClass> groups) {
-        this.groups = groups;
     }
 }
