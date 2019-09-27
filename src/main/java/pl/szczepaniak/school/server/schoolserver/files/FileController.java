@@ -41,6 +41,9 @@ public class FileController {
     @Autowired
     GroupRepository groupRepository;
 
+    @Autowired
+    DayRepository dayRepository;
+
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -63,7 +66,7 @@ public class FileController {
                 .path(fileName)
                 .toUriString();
 
-        LessonPlanReader lessonPlanReader =  new LessonPlanReader(file, peroidRepository, subjectRepository, teacherRepository, classRepository, groupRepository);
+        new LessonPlanReader(file, peroidRepository, subjectRepository, teacherRepository, classRepository, groupRepository, dayRepository);
 
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());

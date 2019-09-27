@@ -16,7 +16,7 @@ public class ClassController {
     private ClassRepository classRepository;
 
     @GetMapping("/classes")
-    public Page<ClassDto> getAllclasses(Pageable pageable) {
+    public Page<ClassDto> getAllClasses(Pageable pageable) {
         return classRepository.findAll(pageable).map(this::convert);
     }
 
@@ -24,6 +24,11 @@ public class ClassController {
     public ClassDto getByExternalID(@PathVariable String externalID){
         return  convert(classRepository.findByexternalID(externalID));
     }
+
+//    @GetMapping("/classes/{name}")
+//    public ClassDto getByName(@PathVariable String name){
+//        return  convert(classRepository.findByName(name));
+//    }
 
 
     @PostMapping("/classes")
