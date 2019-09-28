@@ -1,22 +1,25 @@
 package pl.szczepaniak.school.server.schoolserver.lesson_plan;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class ClassDto {
+@Entity
+public class ClassRoom {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String externalID;
 
     private String name;
 
-    //private List<GroupDto> groups;
-
-
-    public ClassDto() {
+    public ClassRoom() {
     }
 
-    public ClassDto(String externalID, String name) {
+    public ClassRoom(String externalID, String name) {
         this.externalID = externalID;
         this.name = name;
     }
@@ -44,12 +47,4 @@ public class ClassDto {
     public void setName(String name) {
         this.name = name;
     }
-
-//    public List<GroupDto> getGroups() {
-//        return groups;
-//    }
-//
-//    public void setGroups(List<GroupDto> groups) {
-//        this.groups = groups;
-//    }
 }

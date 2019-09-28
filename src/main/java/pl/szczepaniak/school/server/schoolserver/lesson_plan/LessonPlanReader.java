@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.web.multipart.MultipartFile;
+import pl.szczepaniak.school.server.schoolserver.files.FileController;
 
 import java.io.*;
 
@@ -18,18 +19,19 @@ public class LessonPlanReader extends FileNotFoundException {
     private ClassRepository classRepository;
     private GroupRepository groupRepository;
     private DayRepository dayRepository;
+    private ClassRoomRepository classRoomRepository;
 
     private JsonObject jsonObject;
 
-    public LessonPlanReader(MultipartFile file, PeriodRepository peroidRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, ClassRepository classRepository, GroupRepository groupRepository, DayRepository dayRepository) {
+    public LessonPlanReader(MultipartFile file, FileController controller) {
         this.file = file;
-        this.peroidRepository = peroidRepository;
-        this.subjectRepository = subjectRepository;
-        this.teacherRepository = teacherRepository;
-        this.classRepository = classRepository;
-        this.groupRepository = groupRepository;
-        this.dayRepository = dayRepository;
-
+        this.peroidRepository = controller.getPeroidRepository();
+        this.subjectRepository = controller.getSubjectRepository();
+        this.teacherRepository = controller.getTeacherRepository();
+        this.classRepository = controller.getClassRepository();
+        this.groupRepository = controller.getGroupRepository();
+        this.dayRepository = controller.getDayRepository();
+        this.classRoomRepository = controller.getClassRoomRepository();
 
         try {
             String json = new String(file.getBytes());
@@ -43,6 +45,7 @@ public class LessonPlanReader extends FileNotFoundException {
             saveClasses();
             saveGroups();
             saveDays();
+            saveClassRooms();
         }
     }
 
@@ -154,6 +157,23 @@ public class LessonPlanReader extends FileNotFoundException {
                 dayRepository.save(day);
             }
             System.out.println("Save Days");
+        }
+    }
+
+    void saveClassRooms(){
+
+        classRoomRepository.deleteAll();
+
+        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("classrooms").getAsJsonArray("classroom");
+
+        if(jsonPeroids != null) {
+            for (int i = 0; i < jsonPeroids.size(); i++) {
+                ClassRoom room = new ClassRoom();
+                room.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
+                room.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                classRoomRepository.save(room);
+            }
+            System.out.println("Save Rooms");
         }
     }
 }

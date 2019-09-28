@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ClassController {
@@ -63,6 +65,21 @@ public class ClassController {
         dto.setId(c.getId());
         dto.setExternalID(c.getExternalID());
         dto.setName(c.getName());
+//        List<GroupClass> groupClasses = c.getGroups();
+//        List<GroupDto> groupDtos = new ArrayList<>();
+//
+//        for(GroupClass g : groupClasses){
+//            groupDtos.add(convert(g));
+//        }
+//        dto.setGroups(groupDtos);
+        return dto;
+    }
+
+    private GroupDto convert(GroupClass group) {
+        GroupDto dto = new GroupDto();
+        dto.setId(group.getId());
+        dto.setExternalID(group.getExternalID());
+        dto.setName(group.getName());
         return dto;
     }
 }

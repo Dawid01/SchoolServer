@@ -44,6 +44,9 @@ public class FileController {
     @Autowired
     DayRepository dayRepository;
 
+    @Autowired
+    ClassRoomRepository classRoomRepository;
+
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -66,7 +69,7 @@ public class FileController {
                 .path(fileName)
                 .toUriString();
 
-        new LessonPlanReader(file, peroidRepository, subjectRepository, teacherRepository, classRepository, groupRepository, dayRepository);
+        new LessonPlanReader(file, this);
 
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
@@ -100,5 +103,34 @@ public class FileController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+
+    public PeriodRepository getPeroidRepository() {
+        return peroidRepository;
+    }
+
+    public SubjectRepository getSubjectRepository() {
+        return subjectRepository;
+    }
+
+    public TeacherRepository getTeacherRepository() {
+        return teacherRepository;
+    }
+
+    public ClassRepository getClassRepository() {
+        return classRepository;
+    }
+
+    public GroupRepository getGroupRepository() {
+        return groupRepository;
+    }
+
+    public DayRepository getDayRepository() {
+        return dayRepository;
+    }
+
+    public ClassRoomRepository getClassRoomRepository() {
+        return classRoomRepository;
     }
 }
