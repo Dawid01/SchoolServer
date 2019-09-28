@@ -32,12 +32,12 @@ public class ClassRoomController {
 
     @PutMapping("/classrooms/{id}")
     public ClassRoomDto updateClassRoom(@PathVariable Long roomId,
-                                @Valid @RequestBody GroupClass group) {
+                                @Valid @RequestBody ClassRoom room) {
         return classRoomRepository.findById(roomId)
                 .map(question -> {
-                    question.setId(group.getId());
-                    question.setName(group.getName());
-                    question.setExternalID(group.getExternalID());
+                    question.setId(room.getId());
+                    question.setName(room.getName());
+                    question.setExternalID(room.getExternalID());
                     return convert(classRoomRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("Class room not found with id " + roomId));
     }
@@ -60,6 +60,5 @@ public class ClassRoomController {
         dto.setName(classRoom.getName());
         return dto;
     }
-
 
 }

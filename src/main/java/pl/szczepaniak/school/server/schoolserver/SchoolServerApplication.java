@@ -38,12 +38,6 @@ public class SchoolServerApplication {
     @Autowired
     private GameScoreRepository gameScoreRepository;
 
-    @Autowired
-    private LessonPlanRepository lessonPlanRepository;
-
-    @Autowired
-    private  LessonRepositiry lessonRepositiry;
-
 
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
@@ -148,58 +142,6 @@ public class SchoolServerApplication {
         gameRepository.save(binaryGame);
         gameScoreRepository.save(new GameScore(84, user2.getId(), binaryGame));
         gameScoreRepository.save(new GameScore(14, user3.getId(), binaryGame));
-
-        LessonPlan lessonPlan1 = new LessonPlan();
-        lessonPlan1.setName("IIIG");
-        lessonPlanRepository.save(lessonPlan1);
-
-        lessonRepositiry.save(new Lesson(4, "Matematyka", "203", "GD", 1, lessonPlan1));
-        lessonRepositiry.save(new Lesson(5, "Religia / Etyka", "08 / 03", "OJ / JK", 1, lessonPlan1));
-        lessonRepositiry.save(new Lesson(6, "Historia", "101", "TW", 1, lessonPlan1));
-        lessonRepositiry.save(new Lesson(7, "J.Polski", "100", "DA", 1, lessonPlan1));
-        lessonRepositiry.save(new Lesson(8, "Fizyka", "201", "MM", 1, lessonPlan1));
-        lessonRepositiry.save(new Lesson(9, "Zzw", "03", "DA", 1, lessonPlan1));
-
-        lessonRepositiry.save(new Lesson(3, "Matematyka", "202", "GD", 2, lessonPlan1));
-        lessonRepositiry.save(new Lesson(4, "Matematyka", "202", "GD", 2, lessonPlan1));
-        lessonRepositiry.save(new Lesson(5, "Historia", "101", "TW", 2, lessonPlan1));
-        lessonRepositiry.save(new Lesson(6, "J.Ang / PRZERWA NA CKP", "33 / ckp", "PB / ckp", 2, lessonPlan1));
-        lessonRepositiry.save(new Lesson(7, "Wf / Apk. Internetowe", "B / A_210 ckp", "MA / GT", 2, lessonPlan1));
-
-        lessonRepositiry.save(new Lesson(1, "Wf (G_1)", "SGD1", "MA", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(2, "J.Polsko", "103", "DA", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(3, "J.Polsko", "103", "DA", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(4, "Matematyka", "104", "GD", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(5, "Bdai / Psk", "207 / 306", "GT / KU", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(6, "Bdai / Psk", "207 / 306", "GT / KU", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(7, "Psk / Wf", "306 / SGD2", "KU / PE", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(8, "Psk / Wf", "306 / SGD2", "KU / PE", 3, lessonPlan1));
-        lessonRepositiry.save(new Lesson(9, "J.Niemiecki", "29 / 102", "SM / MI", 3, lessonPlan1));
-
-        lessonRepositiry.save(new Lesson(1, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(2, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(3, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(4, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(5, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(6, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(7, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(8, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(9, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(10, "CKP", "", "", 4, lessonPlan1));
-        lessonRepositiry.save(new Lesson(11, "CKP", "", "", 4, lessonPlan1));
-
-        lessonRepositiry.save(new Lesson(0, "Bdai (G_1)", "207", "GT", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(1, "Bdai (G_1)", "207", "GT", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(2, "Fizyka / Wf", "201 / SGD1", "MM / PE", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(3, "Religia / Etyka", "08 / 03", "OJ / JK", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(4, "J.Angielski", "33 / 202", "PB / KA", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(5, "Bdai (G_2)", "207", "GT", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(6, "Bdai (G_2)", "207", "GT", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(7, "Fizyka (G_2)", "201", "MM", 5, lessonPlan1));
-        lessonRepositiry.save(new Lesson(8, "J.Angielski (G_2)", "34", "KA", 5, lessonPlan1));
-
-
-
 
     }
 

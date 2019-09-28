@@ -20,6 +20,7 @@ public class LessonPlanReader extends FileNotFoundException {
     private GroupRepository groupRepository;
     private DayRepository dayRepository;
     private ClassRoomRepository classRoomRepository;
+    private WeekRepository weekRepository;
 
     private JsonObject jsonObject;
 
@@ -32,6 +33,7 @@ public class LessonPlanReader extends FileNotFoundException {
         this.groupRepository = controller.getGroupRepository();
         this.dayRepository = controller.getDayRepository();
         this.classRoomRepository = controller.getClassRoomRepository();
+        this.weekRepository = controller.getWeekRoomRepository();
 
         try {
             String json = new String(file.getBytes());
@@ -46,6 +48,7 @@ public class LessonPlanReader extends FileNotFoundException {
             saveGroups();
             saveDays();
             saveClassRooms();
+            saveWeeks();
         }
     }
 
@@ -174,6 +177,24 @@ public class LessonPlanReader extends FileNotFoundException {
                 classRoomRepository.save(room);
             }
             System.out.println("Save Rooms");
+        }
+    }
+
+    void saveWeeks(){
+
+        weekRepository.deleteAll();
+
+        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("weeksdefs").getAsJsonArray("weeksdef");
+
+        if(jsonPeroids != null) {
+            for (int i = 0; i < jsonPeroids.size(); i++) {
+                Week week = new Week();
+                week.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
+                week.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                week.setWeek(jsonPeroids.get(i).getAsJsonObject().get("_weeks").getAsString());
+                weekRepository.save(week);
+            }
+            System.out.println("Save Weeks");
         }
     }
 }

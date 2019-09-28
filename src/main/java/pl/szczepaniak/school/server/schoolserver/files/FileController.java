@@ -47,6 +47,9 @@ public class FileController {
     @Autowired
     ClassRoomRepository classRoomRepository;
 
+    @Autowired
+    WeekRepository weekRoomRepository;
+
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -132,5 +135,9 @@ public class FileController {
 
     public ClassRoomRepository getClassRoomRepository() {
         return classRoomRepository;
+    }
+
+    public WeekRepository getWeekRoomRepository() {
+        return weekRoomRepository;
     }
 }
