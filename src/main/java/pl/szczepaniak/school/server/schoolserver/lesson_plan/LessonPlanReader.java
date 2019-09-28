@@ -21,6 +21,7 @@ public class LessonPlanReader extends FileNotFoundException {
     private DayRepository dayRepository;
     private ClassRoomRepository classRoomRepository;
     private WeekRepository weekRepository;
+    private LessonRepository lessonRepository;
 
     private JsonObject jsonObject;
 
@@ -34,6 +35,7 @@ public class LessonPlanReader extends FileNotFoundException {
         this.dayRepository = controller.getDayRepository();
         this.classRoomRepository = controller.getClassRoomRepository();
         this.weekRepository = controller.getWeekRoomRepository();
+        this.lessonRepository = controller.getLessonRepository();
 
         try {
             String json = new String(file.getBytes());
@@ -49,6 +51,7 @@ public class LessonPlanReader extends FileNotFoundException {
             saveDays();
             saveClassRooms();
             saveWeeks();
+            saveLessons();
         }
     }
 
@@ -195,6 +198,29 @@ public class LessonPlanReader extends FileNotFoundException {
                 weekRepository.save(week);
             }
             System.out.println("Save Weeks");
+        }
+    }
+
+    void saveLessons(){
+
+        lessonRepository.deleteAll();
+
+        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("lessons").getAsJsonArray("lesson");
+
+        if(jsonPeroids != null) {
+            for (int i = 0; i < jsonPeroids.size(); i++) {
+                Lesson lesson = new Lesson();
+                lesson.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
+                lesson.setClassId(jsonPeroids.get(i).getAsJsonObject().get("_classids").getAsString());
+                lesson.setDayId(jsonPeroids.get(i).getAsJsonObject().get("_daysdefid").getAsString());
+                lesson.setGroupId(jsonPeroids.get(i).getAsJsonObject().get("_groupids").getAsString());
+                lesson.setPeroidId(jsonPeroids.get(i).getAsJsonObject().get("_periodspercard").getAsString());
+                lesson.setSubjectId(jsonPeroids.get(i).getAsJsonObject().get("_subjectid").getAsString());
+                lesson.setTeacherId(jsonPeroids.get(i).getAsJsonObject().get("_teacherids").getAsString());
+                lesson.setWeekId(jsonPeroids.get(i).getAsJsonObject().get("_weeksdefid").getAsString());
+                lessonRepository.save(lesson);
+            }
+            System.out.println("Save Lessons");
         }
     }
 }

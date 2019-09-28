@@ -1,15 +1,7 @@
 package pl.szczepaniak.school.server.schoolserver.lesson_plan;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class LessonDto {
 
-@Entity
-public class Lesson {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String externalID;
@@ -28,10 +20,10 @@ public class Lesson {
 
     private String teacherId;
 
-    public Lesson() {
+    public LessonDto() {
     }
 
-    public Lesson(String externalID, String classId, String subjectId, String groupId, String weekId, String dayId, String peroidId, String teacherId) {
+    public LessonDto(String externalID, String classId, String subjectId, String groupId, String weekId, String dayId, String peroidId, String teacherId) {
         this.externalID = externalID;
         this.classId = classId;
         this.subjectId = subjectId;

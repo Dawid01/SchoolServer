@@ -61,7 +61,5 @@ public class WeekController {
         dto.setWeek(week.getWeek());
         return dto;
     }
-
-
 }
 
