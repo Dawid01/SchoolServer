@@ -72,6 +72,4 @@ public class LessonController {
         dto.setWeekId(lesson.getWeekId());
         return dto;
     }
-
-
 }

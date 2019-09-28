@@ -53,6 +53,9 @@ public class FileController {
     @Autowired
     LessonRepository lessonRepository;
 
+    @Autowired
+    CardRepository cardRepository;
+
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -146,5 +149,9 @@ public class FileController {
 
     public LessonRepository getLessonRepository() {
         return lessonRepository;
+    }
+
+    public CardRepository getCardRepository() {
+        return cardRepository;
     }
 }

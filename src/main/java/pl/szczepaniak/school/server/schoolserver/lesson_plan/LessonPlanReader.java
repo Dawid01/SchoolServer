@@ -22,6 +22,7 @@ public class LessonPlanReader extends FileNotFoundException {
     private ClassRoomRepository classRoomRepository;
     private WeekRepository weekRepository;
     private LessonRepository lessonRepository;
+    private CardRepository cardRepository;
 
     private JsonObject jsonObject;
 
@@ -36,6 +37,7 @@ public class LessonPlanReader extends FileNotFoundException {
         this.classRoomRepository = controller.getClassRoomRepository();
         this.weekRepository = controller.getWeekRoomRepository();
         this.lessonRepository = controller.getLessonRepository();
+        this.cardRepository = controller.getCardRepository();
 
         try {
             String json = new String(file.getBytes());
@@ -52,6 +54,7 @@ public class LessonPlanReader extends FileNotFoundException {
             saveClassRooms();
             saveWeeks();
             saveLessons();
+            saveCards();
         }
     }
 
@@ -223,4 +226,37 @@ public class LessonPlanReader extends FileNotFoundException {
             System.out.println("Save Lessons");
         }
     }
+
+    void saveCards(){
+
+        cardRepository.deleteAll();
+
+        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("cards").getAsJsonArray("card");
+
+        if(jsonPeroids != null) {
+            for (int i = 0; i < jsonPeroids.size(); i++) {
+                Card card = new Card();
+                card.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_lessonid").getAsString());
+                Lesson lesson = lessonRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("_lessonid").getAsString());
+                Class c = classRepository.findByexternalID(lesson.getClassId());
+                if(c != null)
+                card.setClassName(c.getName());
+                Teacher teacher = teacherRepository.findByexternalID(lesson.getTeacherId());
+                if(teacher != null)
+                card.setTeacher(teacher.getName());
+                Period period = peroidRepository.findByexternalID(lesson.getPeroidId());
+                card.setPeroid(period.getStartTime() + " - " + period.getEndTime());
+                card.setLessonNumber(period.getPeriod());
+                Day day = dayRepository.findByexternalID(lesson.getDayId());
+                card.setDay(day.getName());
+                Subject subject = subjectRepository.findByexternalID(lesson.getSubjectId());
+                card.setSubject(subject.getName());
+                Week week = weekRepository.findByexternalID(lesson.getWeekId());
+                card.setWeek(week.getName());
+                cardRepository.save(card);
+            }
+            System.out.println("Save Cards");
+        }
+    }
+
 }
