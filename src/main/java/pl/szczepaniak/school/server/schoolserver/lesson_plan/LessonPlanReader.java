@@ -41,6 +41,7 @@ public class LessonPlanReader extends FileNotFoundException {
 
         try {
             String json = new String(file.getBytes());
+           // json = stringToUTF8(json);
             jsonObject = new JsonParser().parse(json).getAsJsonObject();
         }catch (IOException e){}
 
@@ -68,7 +69,7 @@ public class LessonPlanReader extends FileNotFoundException {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Period period = new Period();
                 period.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
-                period.setPeriod(jsonPeroids.get(i).getAsJsonObject().get("_period").getAsInt());
+                period.setPeriod(jsonPeroids.get(i).getAsJsonObject().get("_period").getAsString());
                 period.setStartTime(jsonPeroids.get(i).getAsJsonObject().get("_starttime").getAsString());
                 period.setEndTime(jsonPeroids.get(i).getAsJsonObject().get("_endtime").getAsString());
                 peroidRepository.save(period);
@@ -244,7 +245,7 @@ public class LessonPlanReader extends FileNotFoundException {
                 Teacher teacher = teacherRepository.findByexternalID(lesson.getTeacherId());
                 if(teacher != null)
                 card.setTeacher(teacher.getName());
-                Period period = peroidRepository.findByexternalID(lesson.getPeroidId());
+                Period period = peroidRepository.findByePeroid(jsonPeroids.get(i).getAsJsonObject().get("_period").getAsString());
                 card.setPeroid(period.getStartTime() + " - " + period.getEndTime());
                 card.setLessonNumber(period.getPeriod());
                 Day day = dayRepository.findByexternalID(lesson.getDayId());
@@ -257,6 +258,16 @@ public class LessonPlanReader extends FileNotFoundException {
             }
             System.out.println("Save Cards");
         }
+    }
+
+    public static String stringToUTF8(String s) {
+        String out;
+        try {
+            out = new String(s.getBytes("UTF-8"), "ISO-8859-1");
+        } catch (java.io.UnsupportedEncodingException e) {
+            return null;
+        }
+        return out;
     }
 
 }

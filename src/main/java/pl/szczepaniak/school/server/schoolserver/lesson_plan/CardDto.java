@@ -18,13 +18,13 @@ public class CardDto {
 
     private String className;
 
-    private int lessonNumber;
+    private String lessonNumber;
 
 
     public CardDto() {
     }
 
-    public CardDto(String externalID, String peroid, String teacher, String day, String subject, String week, int lessonNumber) {
+    public CardDto(String externalID, String peroid, String teacher, String day, String subject, String week, String lessonNumber) {
         this.externalID = externalID;
         this.peroid = peroid;
         this.teacher = teacher;
@@ -90,11 +90,11 @@ public class CardDto {
         this.week = week;
     }
 
-    public int getLessonNumber() {
+    public String getLessonNumber() {
         return lessonNumber;
     }
 
-    public void setLessonNumber(int lessonNumber) {
+    public void setLessonNumber(String lessonNumber) {
         this.lessonNumber = lessonNumber;
     }
 

@@ -21,10 +21,10 @@ public class PeriodController {
     }
 
 
-    @GetMapping("/peroids/{externalID}")
-    public PeriodDto getByExternalID(@PathVariable String externalID){
-        return  convert(peroidRepository.findByexternalID(externalID));
-    }
+//    @GetMapping("/peroids/{externalID}")
+//    public PeriodDto getByExternalID(@PathVariable String externalID){
+//        return  convert(peroidRepository.findByexternalID(externalID));
+//    }
 
 
     @PostMapping("/peroids")

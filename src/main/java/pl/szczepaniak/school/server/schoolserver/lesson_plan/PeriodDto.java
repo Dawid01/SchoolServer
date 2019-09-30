@@ -6,7 +6,7 @@ public class PeriodDto {
 
     private String externalID;
 
-    private int period;
+    private String period;
 
     private String startTime;
 
@@ -15,7 +15,7 @@ public class PeriodDto {
     public PeriodDto() {
     }
 
-    public PeriodDto(String externalID, int peroid, String startTime, String endTime) {
+    public PeriodDto(String externalID, String peroid, String startTime, String endTime) {
         this.externalID = externalID;
         this.period = peroid;
         this.startTime = startTime;
@@ -38,11 +38,11 @@ public class PeriodDto {
         this.externalID = externalID;
     }
 
-    public int getPeriod() {
+    public String getPeriod() {
         return period;
     }
 
-    public void setPeriod(int period) {
+    public void setPeriod(String period) {
         this.period = period;
     }
 
