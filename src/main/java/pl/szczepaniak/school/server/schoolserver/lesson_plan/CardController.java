@@ -49,6 +49,8 @@ public class CardController {
                     question.setTeacher(card.getTeacher());
                     question.setWeek(card.getWeek());
                     question.setClassName(card.getClassName());
+                    question.setRoom(card.getRoom());
+                    question.setGroupName(card.getGroupName());
                     return convert(cardRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("Card room not found with id " + cardId));
     }
@@ -75,6 +77,8 @@ public class CardController {
         dto.setTeacher(card.getTeacher());
         dto.setWeek(card.getWeek());
         dto.setClassName(card.getClassName());
+        dto.setRoom(card.getRoom());
+        dto.setGroupName(card.getGroupName());
         return dto;
     }
 }

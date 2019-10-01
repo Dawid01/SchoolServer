@@ -26,12 +26,16 @@ public class Card {
 
     private String className;
 
-    private String lessonNumber;
+    private int lessonNumber;
+
+    private String room;
+
+    private String groupName;
 
     public Card() {
     }
 
-    public Card(String externalID, String peroid, String teacher, String day, String subject, String week, String lessonNumber) {
+    public Card(String externalID, String peroid, String teacher, String day, String subject, String week, int lessonNumber, String room, String groupName) {
         this.externalID = externalID;
         this.peroid = peroid;
         this.teacher = teacher;
@@ -39,6 +43,8 @@ public class Card {
         this.subject = subject;
         this.week = week;
         this.lessonNumber = lessonNumber;
+        this.room = room;
+        this.groupName = groupName;
     }
 
     public Long getId() {
@@ -97,11 +103,11 @@ public class Card {
         this.week = week;
     }
 
-    public String getLessonNumber() {
+    public int getLessonNumber() {
         return lessonNumber;
     }
 
-    public void setLessonNumber(String lessonNumber) {
+    public void setLessonNumber(int lessonNumber) {
         this.lessonNumber = lessonNumber;
     }
 
@@ -111,5 +117,21 @@ public class Card {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

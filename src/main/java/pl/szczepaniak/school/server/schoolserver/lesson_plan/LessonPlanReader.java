@@ -41,7 +41,6 @@ public class LessonPlanReader extends FileNotFoundException {
 
         try {
             String json = new String(file.getBytes());
-           // json = stringToUTF8(json);
             jsonObject = new JsonParser().parse(json).getAsJsonObject();
         }catch (IOException e){}
 
@@ -89,7 +88,11 @@ public class LessonPlanReader extends FileNotFoundException {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Subject subject = new Subject();
                 subject.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                subject.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                String subj = jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString();
+                if(subj.chars().count() > 15){
+                    subj = jsonPeroids.get(i).getAsJsonObject().get("_short").getAsString();
+                }
+                subject.setName(subj);
                 subjectRepository.save(subject);
             }
             System.out.println("Save Subjects");
@@ -241,33 +244,30 @@ public class LessonPlanReader extends FileNotFoundException {
                 Lesson lesson = lessonRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("_lessonid").getAsString());
                 Class c = classRepository.findByexternalID(lesson.getClassId());
                 if(c != null)
-                card.setClassName(c.getName());
+                    card.setClassName(c.getName());
                 Teacher teacher = teacherRepository.findByexternalID(lesson.getTeacherId());
                 if(teacher != null)
-                card.setTeacher(teacher.getName());
+                    card.setTeacher(teacher.getName());
                 Period period = peroidRepository.findByePeroid(jsonPeroids.get(i).getAsJsonObject().get("_period").getAsString());
                 card.setPeroid(period.getStartTime() + " - " + period.getEndTime());
-                card.setLessonNumber(period.getPeriod());
+                card.setLessonNumber(Integer.parseInt(period.getPeriod()));
                 Day day = dayRepository.findByexternalID(lesson.getDayId());
                 card.setDay(jsonPeroids.get(i).getAsJsonObject().get("_days").getAsString());
                 Subject subject = subjectRepository.findByexternalID(lesson.getSubjectId());
                 card.setSubject(subject.getName());
                 Week week = weekRepository.findByexternalID(lesson.getWeekId());
                 card.setWeek(week.getName());
+                ClassRoom classRoom = classRoomRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("_classroomids").getAsString());
+                if(classRoom != null)
+                card.setRoom(classRoom.getName());
+                    GroupClass groupClass = groupRepository.findByexternalID(lesson.getGroupId());
+                if(groupClass != null)
+                    card.setGroupName(groupClass.getName());
                 cardRepository.save(card);
             }
             System.out.println("Save Cards");
         }
     }
 
-    public static String stringToUTF8(String s) {
-        String out;
-        try {
-            out = new String(s.getBytes("UTF-8"), "ISO-8859-1");
-        } catch (java.io.UnsupportedEncodingException e) {
-            return null;
-        }
-        return out;
-    }
 
 }
