@@ -250,6 +250,8 @@ public class LessonPlanReader extends FileNotFoundException {
                     card.setTeacher(teacher.getName());
                 Period period = peroidRepository.findByePeroid(jsonPeroids.get(i).getAsJsonObject().get("_period").getAsString());
                 card.setPeroid(period.getStartTime() + " - " + period.getEndTime());
+                card.setStartTime(period.getStartTime());
+                card.setEndTime(period.getEndTime());
                 card.setLessonNumber(Integer.parseInt(period.getPeriod()));
                 Day day = dayRepository.findByexternalID(lesson.getDayId());
                 card.setDay(jsonPeroids.get(i).getAsJsonObject().get("_days").getAsString());

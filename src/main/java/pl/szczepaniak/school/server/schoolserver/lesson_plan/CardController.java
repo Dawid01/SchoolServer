@@ -51,6 +51,8 @@ public class CardController {
                     question.setClassName(card.getClassName());
                     question.setRoom(card.getRoom());
                     question.setGroupName(card.getGroupName());
+                    question.setStartTime(card.getStartTime());
+                    question.setEndTime(card.getEndTime());
                     return convert(cardRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("Card room not found with id " + cardId));
     }
@@ -79,6 +81,8 @@ public class CardController {
         dto.setClassName(card.getClassName());
         dto.setRoom(card.getRoom());
         dto.setGroupName(card.getGroupName());
+        dto.setStartTime(card.getStartTime());
+        dto.setEndTime(card.getEndTime());
         return dto;
     }
 }

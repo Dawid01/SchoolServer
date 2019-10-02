@@ -24,6 +24,10 @@ public class CardDto {
 
     private String groupName;
 
+    private String startTime;
+
+    private String endTime;
+
     public CardDto() {
     }
 
@@ -125,5 +129,21 @@ public class CardDto {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }
