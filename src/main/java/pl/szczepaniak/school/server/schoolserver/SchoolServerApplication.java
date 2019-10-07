@@ -143,6 +143,14 @@ public class SchoolServerApplication {
         gameScoreRepository.save(new GameScore(84, user2.getId(), binaryGame));
         gameScoreRepository.save(new GameScore(14, user3.getId(), binaryGame));
 
+        User user4 = new User();
+        user4.setName("Big");
+        user4.setSurname("Lion");
+        user4.setPermissions(0);
+        user4.setEmail("biglion@gmail.com");
+        user4.setPassword("12345678");
+        user4.setPhoto("https://preview.redd.it/sg5q1bijotn31.jpg?width=960&crop=smart&auto=webp&s=45b0267d1e4a090bbcd0406e0d3ccaabf0c7392b");
+        userRepository.save(user4);
     }
 
 }

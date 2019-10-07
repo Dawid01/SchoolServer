@@ -25,6 +25,11 @@ public class CardController {
         return cardRepository.findCards(className, day, pageable).map(this::convert);
     }
 
+    @GetMapping("/cards/teachername/{teacherName}/{day}")
+    public Page<CardDto> getCardsByTeacher(@PathVariable String teacherName, @PathVariable String day, Pageable pageable) {
+        return cardRepository.findCardsForTeacher(teacherName, day, pageable).map(this::convert);
+    }
+
     @GetMapping("/cards/{externalID}")
     public CardDto getByExternalID(@PathVariable String externalID){
         return  convert(cardRepository.findByexternalID(externalID));
