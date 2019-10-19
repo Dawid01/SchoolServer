@@ -69,7 +69,7 @@ public class CardController {
 
 
 
-    @DeleteMapping("/cards/{groupId}")
+    @DeleteMapping("/cards/{cardId}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Long cardId) {
         return cardRepository.findById(cardId)
                 .map(question -> {

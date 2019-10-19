@@ -19,10 +19,10 @@ public interface CardRepository extends JpaRepository<Card,Long> {
     @Query(value = "SELECT c FROM Card c WHERE c.teacher =:teacher and c.day =:day",
             countQuery = "SELECT count(c) FROM Card c WHERE c.teacher =:teacher and c.day =:day",
             nativeQuery = false)
-    Page<Card> findCardsForTeacher(@Param("teacher") String className, @Param("day") String day, Pageable pageable);
+    Page<Card> findCardsForTeacher(@Param("teacher") String teacher, @Param("day") String day, Pageable pageable);
 
     @Query(value = "SELECT c FROM Card c WHERE c.room =:room and c.day =:day",
             countQuery = "SELECT count(c) FROM Card c WHERE c.room =:room and c.day =:day",
             nativeQuery = false)
-    Page<Card> findCardsForRooms(@Param("room") String className, @Param("day") String day, Pageable pageable);
+    Page<Card> findCardsForRooms(@Param("room") String room, @Param("day") String day, Pageable pageable);
 }

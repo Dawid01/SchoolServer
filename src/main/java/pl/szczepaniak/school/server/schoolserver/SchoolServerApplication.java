@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import pl.szczepaniak.school.server.schoolserver.files.FileStorageProperties;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.Card;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.Replacement;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.ReplacementRepository;
 import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
 
@@ -37,6 +40,9 @@ public class SchoolServerApplication {
 
     @Autowired
     private GameScoreRepository gameScoreRepository;
+
+    @Autowired
+    private ReplacementRepository replacementRepository;
 
 
     public static void main(String[] args) {
@@ -151,6 +157,20 @@ public class SchoolServerApplication {
         user4.setPassword("12345678");
         user4.setPhoto("https://preview.redd.it/sg5q1bijotn31.jpg?width=960&crop=smart&auto=webp&s=45b0267d1e4a090bbcd0406e0d3ccaabf0c7392b");
         userRepository.save(user4);
+
+
+        Replacement replacement = new Replacement();
+        replacement.setClassName("1 AG");
+        replacement.setDay("10000");
+        replacement.setLessonNumber(5);
+        replacement.setWeek("21.10.2019 - 27.10.2019");
+        replacement.setSubject("Matematyka");
+        replacement.setRoom("203");
+        replacement.setTeacher("test");
+        replacement.setStartTime("11:40");
+        replacement.setEndTime("12:25");
+        replacementRepository.save(replacement);
+
     }
 
 }
