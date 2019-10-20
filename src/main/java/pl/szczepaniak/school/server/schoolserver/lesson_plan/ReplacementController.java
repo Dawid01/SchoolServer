@@ -21,8 +21,13 @@ public class ReplacementController {
     }
 
     @GetMapping("/replacements/{week}/{day}/{className}")
-    public Page<ReplacementDto> getReplacement(@PathVariable String week, @PathVariable String day, @PathVariable String className,Pageable pageable) {
-        return replacementRepository.findReplacement(week, day, className, pageable).map(this::convert);
+    public Page<ReplacementDto> getReplacementByClass(@PathVariable String week, @PathVariable String day, @PathVariable String className,Pageable pageable) {
+        return replacementRepository.findReplacementByClass(week, day, className, pageable).map(this::convert);
+    }
+
+    @GetMapping("/replacements/teachers/{week}/{day}/{teacher}")
+    public Page<ReplacementDto> getReplacementByTeacher(@PathVariable String week, @PathVariable String day, @PathVariable String teacher,Pageable pageable) {
+        return replacementRepository.findReplacementByClass(week, day, teacher, pageable).map(this::convert);
     }
 
 
@@ -47,6 +52,7 @@ public class ReplacementController {
                     question.setEndTime(r.getEndTime());
                     question.setRoom(r.getRoom());
                     question.setTeacher(r.getTeacher());
+                    question.setStatus(r.getStatus());
                     return convert(replacementRepository.save(question));
                 }).orElseThrow(() -> new ResourceNotFoundException("Replacement room not found with id " + id));
     }
@@ -74,6 +80,7 @@ public class ReplacementController {
         dto.setEndTime(r.getEndTime());
         dto.setRoom(r.getRoom());
         dto.setTeacher(r.getTeacher());
+        dto.setStatus(r.getStatus());
         return dto;
     }
 

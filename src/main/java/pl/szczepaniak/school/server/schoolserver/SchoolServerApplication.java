@@ -169,7 +169,38 @@ public class SchoolServerApplication {
         replacement.setTeacher("test");
         replacement.setStartTime("11:40");
         replacement.setEndTime("12:25");
+        replacement.setStatus("zastępstwo");
+        replacement.setGroupName("Cala klasa");
         replacementRepository.save(replacement);
+
+        Replacement replacement2 = new Replacement();
+        replacement2.setClassName("1 AG");
+        replacement2.setDay("10000");
+        replacement2.setLessonNumber(0);
+        replacement2.setWeek("21.10.2019 - 27.10.2019");
+        replacement2.setSubject("");
+        replacement2.setRoom("");
+        replacement2.setTeacher("");
+        replacement2.setStartTime("");
+        replacement2.setEndTime("");
+        replacement2.setStatus("odwołane");
+        replacement2.setGroupName("G_E");
+        replacementRepository.save(replacement2);
+
+        Replacement replacement3 = new Replacement();
+        replacement3.setClassName("1 AG");
+        replacement3.setDay("10000");
+        replacement3.setLessonNumber(1);
+        replacement3.setWeek("21.10.2019 - 27.10.2019");
+        replacement3.setSubject("Język niemiecki");
+        replacement3.setRoom("32");
+        replacement3.setTeacher("test");
+        replacement3.setStartTime("8:00");
+        replacement3.setEndTime("8:45");
+        replacement3.setStatus("zastępstwo");
+        replacement3.setGroupName("G_E");
+        replacementRepository.save(replacement3);
+
 
     }
 

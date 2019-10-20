@@ -12,6 +12,10 @@ public interface ReplacementRepository extends JpaRepository<Replacement,Long> {
     @Query(value = "SELECT r FROM Replacement r WHERE r.week =:week and r.day =:day and r.className =:className",
             countQuery = "SELECT count(r) FROM Replacement r WHERE r.week =:room and r.day =:day and r.className =:className",
             nativeQuery = false)
-    Page<Replacement> findReplacement(@Param("week") String week, @Param("day") String day, @Param("className") String className, Pageable pageable);
+    Page<Replacement> findReplacementByClass(@Param("week") String week, @Param("day") String day, @Param("className") String className, Pageable pageable);
 
+    @Query(value = "SELECT r FROM Replacement r WHERE r.week =:week and r.day =:day and r.teacher =:teacher",
+            countQuery = "SELECT count(r) FROM Replacement r WHERE r.week =:room and r.day =:day and r.teacher =:teacher",
+            nativeQuery = false)
+    Page<Replacement> findReplacementByTeacher(@Param("week") String week, @Param("day") String day, @Param("teacher") String teacher, Pageable pageable);
 }

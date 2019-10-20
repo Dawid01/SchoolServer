@@ -24,6 +24,8 @@ public class ReplacementDto {
 
     private String room;
 
+    private String status;
+
     public ReplacementDto() {
     }
 
@@ -113,5 +115,13 @@ public class ReplacementDto {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
