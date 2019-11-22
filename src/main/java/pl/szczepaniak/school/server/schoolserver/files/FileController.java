@@ -56,7 +56,7 @@ public class FileController {
     @Autowired
     CardRepository cardRepository;
 
-    @PostMapping("/uploadFile")
+    @PostMapping("uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
 

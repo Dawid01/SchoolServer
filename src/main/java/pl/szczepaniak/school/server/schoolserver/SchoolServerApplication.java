@@ -79,13 +79,13 @@ public class SchoolServerApplication {
         user2.setName("name");
         user2.setSurname("surname");
         user2.setPassword("12345678");
-        user2.setPhoto("http://192.168.0.176:8080/downloadFile/ILTQq.png");
+        user2.setPhoto("https://us.123rf.com/450wm/kritchanut/kritchanut1406/kritchanut140600112/29213222-stock-vector-male-silhouette-avatar-profile-picture.jpg?ver=6");
         User user3 = new User();
         user3.setEmail("user3@gmail.com");
         user3.setName("User");
         user3.setSurname("3");
         user3.setPassword("12345678");
-        user3.setPhoto("http://giphygifs.s3.amazonaws.com/media/7kn27lnYSAE9O/giphy.gif");
+        user3.setPhoto("https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg");
 
 
         user1 = userRepository.save(user1);
@@ -109,7 +109,7 @@ public class SchoolServerApplication {
         post2.setUserID(user2.getId());
         String[] photos2 = new String[9];
         photos2[0] = "https://images.unsplash.com/photo-1531804055935-76f44d7c3621?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
-        photos2[1] = "http://192.168.0.176:8080/downloadFile/ILTQq.png";
+        photos2[1] = "https://s.yimg.com/ny/api/res/1.2/OL87IFKTs.1ThAybTzev_A--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyNDI7aD04MjkuMjY1NzU3MjkwNjg2Nw--/https://s.yimg.com/uu/api/res/1.2/etJ72CvNrQE8Jq9rqEJ1Fg--~B/aD0yODM5O3c9NDI1MjtzbT0xO2FwcGlkPXl0YWNoeW9u/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-08/ec7f4d90-ca6e-11e9-97e5-a960dba4e558";
         photos2[2] = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dw-burnett-2020-gt500-1547418557.jpg?resize=768:*";
         photos2[3] = "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
         photos2[4] = "https://www.designboom.com/wp-content/uploads/2018/09/photos-burning-man-2018-designboom-1.jpg";
@@ -128,7 +128,7 @@ public class SchoolServerApplication {
         post3.setPermission(0);
         post3.setDateTime("01.07.2019");
         String[] photos3 = new String[4];
-        photos3[0] = "http://hdwpro.com/wp-content/uploads/2018/12/Top-Bugatti-Chiron.jpg";
+        photos3[0] = "https://iso.500px.com/wp-content/uploads/2015/01/primeqa_cover.jpg";
         photos3[1] = "https://cnet4.cbsistatic.com/img/QNyEq1zWTqUwGACe8fTKLv4K1us=/980x551/2019/01/13/53d3ba47-59df-4f54-bcc4-3af9f228f578/2020-ford-mustang-shelby-gt500-detroit-auto-show-46.jpg";
         photos3[2] = "https://images.unsplash.com/photo-1531804055935-76f44d7c3621?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
         photos3[3] = "https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_960_720.jpg";
@@ -163,7 +163,7 @@ public class SchoolServerApplication {
         replacement.setClassName("1 AG");
         replacement.setDay("10000");
         replacement.setLessonNumber(5);
-        replacement.setWeek("21.10.2019 - 27.10.2019");
+        replacement.setWeek("28.10.2019 - 03.11.2019");
         replacement.setSubject("Matematyka");
         replacement.setRoom("203");
         replacement.setTeacher("test");
@@ -177,7 +177,7 @@ public class SchoolServerApplication {
         replacement2.setClassName("1 AG");
         replacement2.setDay("10000");
         replacement2.setLessonNumber(0);
-        replacement2.setWeek("21.10.2019 - 27.10.2019");
+        replacement2.setWeek("28.10.2019 - 03.11.2019");
         replacement2.setSubject("");
         replacement2.setRoom("");
         replacement2.setTeacher("");
@@ -191,7 +191,7 @@ public class SchoolServerApplication {
         replacement3.setClassName("1 AG");
         replacement3.setDay("10000");
         replacement3.setLessonNumber(1);
-        replacement3.setWeek("21.10.2019 - 27.10.2019");
+        replacement3.setWeek("28.10.2019 - 03.11.2019");
         replacement3.setSubject("Język niemiecki");
         replacement3.setRoom("32");
         replacement3.setTeacher("test");
