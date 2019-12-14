@@ -74,7 +74,7 @@ public class UserController extends AbstractController {
         dto.setEmail(user.getEmail());
         dto.setId(user.getId());
         dto.setName(user.getName());
-        dto.setSuname(user.getSurname());
+        dto.setSurname(user.getSurname());
         dto.setPermission(user.getPermissions());
         dto.setPassword(user.getPassword());
         dto.setPhoto(user.getPhoto());

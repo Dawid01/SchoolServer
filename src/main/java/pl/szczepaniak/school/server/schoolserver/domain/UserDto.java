@@ -46,14 +46,6 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getSuname() {
-        return surname;
-    }
-
-    public void setSuname(String surname) {
-        this.surname = surname;
-    }
-
     public int getPermission() {
         return permission;
     }

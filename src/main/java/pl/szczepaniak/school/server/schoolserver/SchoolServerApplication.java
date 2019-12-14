@@ -85,7 +85,7 @@ public class SchoolServerApplication {
         user3.setName("User");
         user3.setSurname("3");
         user3.setPassword("12345678");
-        user3.setPhoto("https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg");
+        user3.setPhoto("https://www.w3schools.com/howto/img_avatar.png");
 
 
         user1 = userRepository.save(user1);
@@ -163,7 +163,7 @@ public class SchoolServerApplication {
         replacement.setClassName("1 AG");
         replacement.setDay("10000");
         replacement.setLessonNumber(5);
-        replacement.setWeek("28.10.2019 - 03.11.2019");
+        replacement.setWeek("09.12.2019 - 15.12.2019");
         replacement.setSubject("Matematyka");
         replacement.setRoom("203");
         replacement.setTeacher("test");
@@ -177,7 +177,7 @@ public class SchoolServerApplication {
         replacement2.setClassName("1 AG");
         replacement2.setDay("10000");
         replacement2.setLessonNumber(0);
-        replacement2.setWeek("28.10.2019 - 03.11.2019");
+        replacement2.setWeek("09.12.2019 - 15.12.2019");
         replacement2.setSubject("");
         replacement2.setRoom("");
         replacement2.setTeacher("");
@@ -191,7 +191,7 @@ public class SchoolServerApplication {
         replacement3.setClassName("1 AG");
         replacement3.setDay("10000");
         replacement3.setLessonNumber(1);
-        replacement3.setWeek("28.10.2019 - 03.11.2019");
+        replacement3.setWeek("09.12.2019 - 15.12.2019");
         replacement3.setSubject("Język niemiecki");
         replacement3.setRoom("32");
         replacement3.setTeacher("test");
