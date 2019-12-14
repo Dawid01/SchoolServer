@@ -94,7 +94,7 @@ public class PostController extends AbstractController {
         User user = post.getUser();
         userDto.setId(user.getId());
         userDto.setName(user.getName());
-        userDto.setSuname(user.getSurname());
+        userDto.setSurname(user.getSurname());
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
         userDto.setPhoto(user.getPhoto());
