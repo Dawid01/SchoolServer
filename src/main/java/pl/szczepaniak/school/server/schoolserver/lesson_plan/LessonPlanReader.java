@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.web.multipart.MultipartFile;
+import pl.szczepaniak.school.server.schoolserver.SchoolServerApplication;
 import pl.szczepaniak.school.server.schoolserver.files.FileController;
 
 import java.io.*;
@@ -56,6 +57,37 @@ public class LessonPlanReader extends FileNotFoundException {
             saveLessons();
             saveCards();
         }
+    }
+
+    public LessonPlanReader(String json, FileController controller) {
+        this.peroidRepository = controller.getPeroidRepository();
+        this.subjectRepository = controller.getSubjectRepository();
+        this.teacherRepository = controller.getTeacherRepository();
+        this.classRepository = controller.getClassRepository();
+        this.groupRepository = controller.getGroupRepository();
+        this.dayRepository = controller.getDayRepository();
+        this.classRoomRepository = controller.getClassRoomRepository();
+        this.weekRepository = controller.getWeekRoomRepository();
+        this.lessonRepository = controller.getLessonRepository();
+        this.cardRepository = controller.getCardRepository();
+
+        jsonObject = new JsonParser().parse(json).getAsJsonObject();
+
+        if(jsonObject != null) {
+            savePeroids();
+            saveSubjects();
+            saveTeachers();
+            saveClasses();
+            saveGroups();
+            saveDays();
+            saveClassRooms();
+            saveWeeks();
+            saveLessons();
+            saveCards();
+        }
+    }
+
+    public LessonPlanReader(String s, SchoolServerApplication schoolServerApplication) {
     }
 
     private void savePeroids(){

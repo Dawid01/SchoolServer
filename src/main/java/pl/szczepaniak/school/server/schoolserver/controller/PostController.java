@@ -53,7 +53,7 @@ public class PostController extends AbstractController {
         return convert(postRepository.save(post));
     }
 
-    @PutMapping("/posts/{id}")
+    @PutMapping("/posts/update/{id}")
     public PostDto updatePost(@PathVariable Long postId,
                                         @Valid @RequestBody Post post) {
         return postRepository.findById(postId)
@@ -72,7 +72,7 @@ public class PostController extends AbstractController {
 
 
 
-    @DeleteMapping("/posts/{postId}")
+    @DeleteMapping("/posts/delete/{postId}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Long postId) {
         return postRepository.findById(postId)
                 .map(question -> {
