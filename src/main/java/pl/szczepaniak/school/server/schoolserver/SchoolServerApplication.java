@@ -235,7 +235,7 @@ public class SchoolServerApplication {
         replacement3.setGroupName("G_E");
         replacementRepository.save(replacement3);
 
-      
+
 //        try {
 //            URL url = new URL("https://plan.ezn.edu.pl/data.json");
 //            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));

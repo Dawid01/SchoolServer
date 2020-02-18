@@ -18,6 +18,8 @@ import pl.szczepaniak.school.server.schoolserver.model.User;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @RestController
 public class UserController extends AbstractController {
@@ -63,7 +65,7 @@ public class UserController extends AbstractController {
     }
 
     @PostMapping("/users/confirm/{name}/{surname}/{email}")
-    public UserDto createUser(@PathVariable String name, @PathVariable String surname, @PathVariable String email) {
+    public String createUser(@PathVariable String name, @PathVariable String surname, @PathVariable String email) {
 
         try {
             MimeMessage msg = javaMailSender.createMimeMessage();
@@ -80,19 +82,22 @@ public class UserController extends AbstractController {
             helper.setText("Twoje konto zostało utworzone! <br>" +
                     "Tymczasowe hasło: <b>" + user.getPassword() + "</b>", true);
             javaMailSender.send(msg);
-
-            return convert(userRepository.save(user));
+            convert(userRepository.save(user));
+            return "Dodano nowego użytkownika";
         }catch (MessagingException e){
-            return null;
+            return "ERROR";
         }
     }
 
-    @GetMapping("/user/create/{className}/{name}/{surname}/{email}/{link}")
+    @GetMapping("/user/create/{className}/{name}/{surname}/{email}")
     public String createUserAccount(@PathVariable String className, @PathVariable String name, @PathVariable String surname, @PathVariable String email) {
 
         try {
 
-            String link = "http://192.168.0.110:8080/" + "users/confirm/" + name + "/" + surname + "/" + email;
+            String ip = "35.232.24.163";
+            //String ip = "192.168.0.110";
+
+            String link = "http://" + ip +":8080/" + "users/confirm/" + name + "/" + surname + "/" + email;
 
             MimeMessage msg = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(msg, true);
@@ -122,6 +127,7 @@ public class UserController extends AbstractController {
                     "  cursor: pointer;\n" +
                     "  margin: auto\"><b>Potwierdz</b></button>\n" +
                     "</form>", true);
+
             javaMailSender.send(msg);
 
             return "OK";
