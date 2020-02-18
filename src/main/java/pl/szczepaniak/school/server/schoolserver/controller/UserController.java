@@ -94,8 +94,8 @@ public class UserController extends AbstractController {
 
         try {
 
-            String ip = "35.232.24.163";
-            //String ip = "192.168.0.110";
+            //String ip = "35.232.24.163";
+            String ip = "192.168.0.110";
 
             String link = "http://" + ip +":8080/" + "users/confirm/" + name + "/" + surname + "/" + email;
 
