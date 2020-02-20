@@ -9,21 +9,11 @@ import org.springframework.context.annotation.Bean;
 import pl.szczepaniak.school.server.schoolserver.controller.UserController;
 import pl.szczepaniak.school.server.schoolserver.files.FileController;
 import pl.szczepaniak.school.server.schoolserver.files.FileStorageProperties;
-import pl.szczepaniak.school.server.schoolserver.files.UploadFileResponse;
-import pl.szczepaniak.school.server.schoolserver.lesson_plan.Card;
-import pl.szczepaniak.school.server.schoolserver.lesson_plan.LessonPlanReader;
 import pl.szczepaniak.school.server.schoolserver.lesson_plan.Replacement;
 import pl.szczepaniak.school.server.schoolserver.lesson_plan.ReplacementRepository;
 import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -63,6 +53,7 @@ public class SchoolServerApplication {
     private UserController userController;
 
 
+
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
     }
@@ -91,12 +82,14 @@ public class SchoolServerApplication {
         user1.setName("John");
         user1.setSurname("Rambo");
         user1.setPassword("12345678");
+        user1.setEnabled(true);
         user1.setPhoto("https://vignette.wikia.nocookie.net/deadliestfiction/images/c/c5/Rambo.jpg/revision/latest?cb=20141007212329");
         User user2 = new User();
         user2.setEmail("example@gmail.com");
         user2.setName("name");
         user2.setSurname("surname");
         user2.setPassword("12345678");
+        user2.setEnabled(true);
         user2.setPhoto("https://us.123rf.com/450wm/kritchanut/kritchanut1406/kritchanut140600112/29213222-stock-vector-male-silhouette-avatar-profile-picture.jpg?ver=6");
         User user3 = new User();
         user3.setEmail("user3@gmail.com");
@@ -104,9 +97,10 @@ public class SchoolServerApplication {
         user3.setSurname("3");
         user3.setPassword("12345678");
         user3.setPhoto("https://www.w3schools.com/howto/img_avatar.png");
+        user3.setEnabled(true);
 
 
-        user1 = userRepository.save(user1);
+        userRepository.save(user1);
         Post post1 =  new Post();
         post1.setUser(user1);
         post1.setContent("Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker. Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).");
@@ -119,7 +113,7 @@ public class SchoolServerApplication {
         post1.setPhotos(photos1);
         postRepositiry.save(post1);
 
-        user2 = userRepository.save(user2);
+        userRepository.save(user2);
         Post post2 =  new Post();
         post2.setUser(user2);
         post2.setContent("Test Content 2");
@@ -150,7 +144,7 @@ public class SchoolServerApplication {
         postRepositiry.save(post2);
 
 
-        user3 = userRepository.save(user3);
+        userRepository.save(user3);
         Post post3 =  new Post();
         post3.setUser(user3);
         post3.setContent("Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker. Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).");

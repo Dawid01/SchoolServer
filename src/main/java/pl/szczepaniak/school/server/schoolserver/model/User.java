@@ -9,6 +9,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
     private Long id;
 
     private String name;
@@ -23,9 +24,15 @@ public class User {
 
     private String photo;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
 
+    public User() {
+        this.enabled = false;
+    }
 
     public Long getId() {
         return id;
@@ -89,5 +96,13 @@ public class User {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

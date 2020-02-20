@@ -11,9 +11,12 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pl.szczepaniak.school.server.schoolserver.PasswordGenerator;
 import pl.szczepaniak.school.server.schoolserver.domain.UserDto;
+import pl.szczepaniak.school.server.schoolserver.model.ConfirmationToken;
 import pl.szczepaniak.school.server.schoolserver.model.User;
+import pl.szczepaniak.school.server.schoolserver.repository.ConfirmationTokenRepository;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -26,6 +29,10 @@ public class UserController extends AbstractController {
 
     @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
+
 
     @GetMapping("/users")
     public Page<UserDto> getUsers(Pageable pageable) {
@@ -64,78 +71,6 @@ public class UserController extends AbstractController {
         return convert(userRepository.save(user));
     }
 
-    @PostMapping("/users/confirm/{name}/{surname}/{email}")
-    public String createUser(@PathVariable String name, @PathVariable String surname, @PathVariable String email) {
-
-        try {
-            MimeMessage msg = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-            helper.setTo(email);
-            helper.setSubject("Witaj " + name);
-
-            User user = new User();
-            user.setEmail(email);
-            user.setName(name);
-            user.setSurname(surname);
-            user.setPassword(new PasswordGenerator().generateRandomPassword(12));
-
-            helper.setText("Twoje konto zostało utworzone! <br>" +
-                    "Tymczasowe hasło: <b>" + user.getPassword() + "</b>", true);
-            javaMailSender.send(msg);
-            convert(userRepository.save(user));
-            return "Dodano nowego użytkownika";
-        }catch (MessagingException e){
-            return "ERROR";
-        }
-    }
-
-    @GetMapping("/user/create/{className}/{name}/{surname}/{email}")
-    public String createUserAccount(@PathVariable String className, @PathVariable String name, @PathVariable String surname, @PathVariable String email) {
-
-        try {
-
-            //String ip = "35.232.24.163";
-            String ip = "192.168.0.110";
-
-            String link = "http://" + ip +":8080/" + "users/confirm/" + name + "/" + surname + "/" + email;
-
-            MimeMessage msg = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-            helper.setTo("dawidszczepaniak55@gmail.com");
-            helper.setSubject("Nowy użytkownik: " + name + " " + surname);
-            helper.setText("<b>Imie: </b>\n" + name +
-                    "<br>\n" +
-                    "<br>\n" +
-                    "<b>Nazwisko: </b>\n" + surname +
-                    "<br>\n" +
-                    "<br>\n" +
-                    "<b>Email: </b>\n" + email +
-                    "<br>\n" +
-                    "<br>\n" +
-                    "<b>Klasa: </b>\n" + className +
-                    "<br>\n" +
-                    "<br>\n" +
-                    "<form action=\"" + link +"\" method=\"post\">" +
-                    "<button style=\"background-color: #14b1ae;\n" +
-                    "  border: none;\n" +
-                    "  color: white;\n" +
-                    "  padding: 15px 32px;\n" +
-                    "  text-align: center;\n" +
-                    "  text-decoration: none;\n" +
-                    "  display: inline-block;\n" +
-                    "  font-size: 16px;\n" +
-                    "  cursor: pointer;\n" +
-                    "  margin: auto\"><b>Potwierdz</b></button>\n" +
-                    "</form>", true);
-
-            javaMailSender.send(msg);
-
-            return "OK";
-        }catch (MessagingException e){
-            return ":(";
-        }
-
-    }
 
     @PutMapping("/users/{userId}")
     public UserDto updateUsers(@PathVariable Long userId,
@@ -162,6 +97,111 @@ public class UserController extends AbstractController {
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userID));
     }
+
+
+    @PostMapping("/register/{className}")
+    public String registerUser(@Valid @RequestBody UserDto userDto, @PathVariable String className)
+    {
+
+        String message = "Error";
+        User existingUser = userRepository.findByEmail(userDto.getEmail());
+        if(existingUser != null)
+        {
+            message = "This email already exists!";
+        }
+        else
+        {
+            User user = new User();
+            user.setName(userDto.getName());
+            user.setSurname(userDto.getName());
+            user.setEmail(userDto.getEmail());
+            user.setPermissions(userDto.getPermission());
+            userRepository.save(user);
+
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+            confirmationTokenRepository.save(confirmationToken);
+            String link = "http://192.168.0.110:8080/confirm-account?token="+confirmationToken.getConfirmationToken();
+
+            try {
+                MimeMessage msg = javaMailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+                helper.setTo("dawidszczepaniak55@gmail.com");
+                helper.setSubject("Nowy użytkownik!");
+                helper.setText("<b>Imie: </b>\n" + user.getName()  +
+                        "<br>\n" +
+                        "<br>\n" +
+                        "<b>Nazwisko: </b>\n" + user.getSurname()  +
+                        "<br>\n" +
+                        "<br>\n" +
+                        "<b>Email: </b>\n" + user.getEmail() +
+                        "<br>\n" +
+                        "<br>\n" +
+                        "<b>Klasa: </b>\n" +
+                        className +
+                        "<br>\n" +
+                        "<br>\n" +
+                        "<button  style=\"background-color: #14b1ae;\n" +
+                        "  border: none;\n" +
+                        "  color: white;\n" +
+                        "  padding: 15px 32px;\n" +
+                        "  text-align: center;\n" +
+                        "  text-decoration: none;\n" +
+                        "  display: inline-block;\n" +
+                        "  font-size: 16px;\n" +
+                        "  cursor: pointer;\n" +
+                        "  margin: auto\"><b><a href = \" + link + \">Potwierdz</a></b></button>\n  <br> " +
+                        "" + link, true);
+
+                javaMailSender.send(msg);
+                message = "successful Registeration";
+            }catch (MessagingException e){
+
+            }
+        }
+
+        return message;
+    }
+
+
+    // @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    @GetMapping("/confirm-account")
+    public ModelAndView confirmUserAccount(@RequestParam("token")String confirmationToken)
+    {
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.format("Confirm...");
+
+        if(token != null)
+        {
+            System.out.format("token != null");
+            User user = userRepository.findByEmail(token.getUser().getEmail());
+            user.setEnabled(true);
+            userRepository.save(user);
+            modelAndView.setViewName("accountVerified");
+            try {
+                System.out.format("send email to " + user.getEmail());
+                MimeMessage msg = javaMailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+                helper.setTo(user.getEmail());
+                user.setPassword(new PasswordGenerator().generateRandomPassword(12));
+                updateUsers(user.getId(), user);
+                helper.setSubject("Witaj " + user.getName() + "!");
+                helper.setText("Twoje konto zostało utworzone! <br>" +
+                        "Tymczasowe hasło: <b>" + user.getPassword() + "</b>", true);
+                javaMailSender.send(msg);
+            }catch (MessagingException e){
+
+            }
+        }
+        else
+        {
+            modelAndView.addObject("message","The link is invalid or broken!");
+            modelAndView.setViewName("error");
+        }
+
+        return modelAndView;
+    }
+
 
     private UserDto convert(User user) {
         UserDto dto = new UserDto();
