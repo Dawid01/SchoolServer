@@ -1,11 +1,14 @@
 package pl.szczepaniak.school.server.schoolserver;
 
+import org.aspectj.weaver.patterns.HasThisTypePatternTriedToSneakInSomeGenericOrParameterizedTypePatternMatchingStuffAnywhereVisitor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.szczepaniak.school.server.schoolserver.controller.UserController;
 import pl.szczepaniak.school.server.schoolserver.files.FileController;
 import pl.szczepaniak.school.server.schoolserver.files.FileStorageProperties;
@@ -14,6 +17,7 @@ import pl.szczepaniak.school.server.schoolserver.lesson_plan.ReplacementReposito
 import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -52,7 +56,8 @@ public class SchoolServerApplication {
     @Autowired
     private UserController userController;
 
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(SchoolServerApplication.class, args);
@@ -71,31 +76,35 @@ public class SchoolServerApplication {
         User guest = new User();
         guest.setEmail("guest@ezn.pl");
         guest.setName("guest");
-        guest.setPassword("guest");
+        guest.setPassword(passwordEncoder.encode("guest"));
         guest.setPhoto("https://www.wykop.pl/cdn/c3397992/anonimowy-anonim_HKw17T8zG1,q250.jpg");
         guest.setPermissions(100);
         guest.setSurname("");
+        guest.setPassworChanged(true);
         userRepository.save(guest);
 
         User user1 = new User();
         user1.setEmail("johnrambo@gmail.com");
         user1.setName("John");
+        user1.setPassworChanged(true);
         user1.setSurname("Rambo");
-        user1.setPassword("12345678");
+//        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+//        byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));
+        user1.setPassword(passwordEncoder.encode("12345678"));
         user1.setEnabled(true);
         user1.setPhoto("https://vignette.wikia.nocookie.net/deadliestfiction/images/c/c5/Rambo.jpg/revision/latest?cb=20141007212329");
         User user2 = new User();
         user2.setEmail("example@gmail.com");
         user2.setName("name");
         user2.setSurname("surname");
-        user2.setPassword("12345678");
+        user2.setPassword(passwordEncoder.encode("12345678"));
         user2.setEnabled(true);
         user2.setPhoto("https://us.123rf.com/450wm/kritchanut/kritchanut1406/kritchanut140600112/29213222-stock-vector-male-silhouette-avatar-profile-picture.jpg?ver=6");
         User user3 = new User();
         user3.setEmail("user3@gmail.com");
         user3.setName("User");
         user3.setSurname("3");
-        user3.setPassword("12345678");
+        user3.setPassword(passwordEncoder.encode("12345678"));
         user3.setPhoto("https://www.w3schools.com/howto/img_avatar.png");
         user3.setEnabled(true);
 
@@ -182,7 +191,7 @@ public class SchoolServerApplication {
         user4.setSurname("Lion");
         user4.setPermissions(0);
         user4.setEmail("biglion@gmail.com");
-        user4.setPassword("12345678");
+        user4.setPassword(passwordEncoder.encode("12345678"));
         user4.setPhoto("https://preview.redd.it/sg5q1bijotn31.jpg?width=960&crop=smart&auto=webp&s=45b0267d1e4a090bbcd0406e0d3ccaabf0c7392b");
         userRepository.save(user4);
 

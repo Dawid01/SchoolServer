@@ -1,18 +1,19 @@
 package pl.szczepaniak.school.server.schoolserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailSendException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.szczepaniak.school.server.schoolserver.PasswordGenerator;
+import pl.szczepaniak.school.server.schoolserver.SecurityConfig;
 import pl.szczepaniak.school.server.schoolserver.domain.UserDto;
 import pl.szczepaniak.school.server.schoolserver.model.ConfirmationToken;
 import pl.szczepaniak.school.server.schoolserver.model.User;
@@ -21,8 +22,6 @@ import pl.szczepaniak.school.server.schoolserver.repository.ConfirmationTokenRep
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 @RestController
 public class UserController extends AbstractController {
@@ -33,6 +32,8 @@ public class UserController extends AbstractController {
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/users")
     public Page<UserDto> getUsers(Pageable pageable) {
@@ -68,8 +69,10 @@ public class UserController extends AbstractController {
 
     @PostMapping("/users")
     public UserDto createQuestion(@Valid @RequestBody User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return convert(userRepository.save(user));
     }
+
 
 
     @PutMapping("/users/{userId}")
@@ -81,7 +84,25 @@ public class UserController extends AbstractController {
                     question.setEmail(user.getEmail());
                     question.setSurname(user.getSurname());
                     question.setPermissions(user.getPermissions());
-                    question.setPassword(user.getPassword());
+                    question.setPassword(passwordEncoder.encode(user.getPassword()));
+                    question.setPassworChanged(user.isPassworChanged());
+                    question.setPosts(user.getPosts());
+                    question.setPhoto(user.getPhoto());
+                    return convert(userRepository.save(question));
+                }).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
+    }
+
+    @PutMapping("/users/passwordUpdate/{userId}")
+    public UserDto updateUserPassword(@PathVariable Long userId,
+                               @Valid @RequestBody User user) {
+        return userRepository.findById(userId)
+                .map(question -> {
+                    question.setName(user.getName());
+                    question.setEmail(user.getEmail());
+                    question.setSurname(user.getSurname());
+                    question.setPermissions(user.getPermissions());
+                    question.setPassword(passwordEncoder.encode(user.getPassword()));
+                    question.setPassworChanged(true);
                     question.setPosts(user.getPosts());
                     question.setPhoto(user.getPhoto());
                     return convert(userRepository.save(question));
@@ -113,7 +134,7 @@ public class UserController extends AbstractController {
         {
             User user = new User();
             user.setName(userDto.getName());
-            user.setSurname(userDto.getName());
+            user.setSurname(userDto.getSurname());
             user.setEmail(userDto.getEmail());
             user.setPermissions(userDto.getPermission());
             userRepository.save(user);
@@ -164,7 +185,6 @@ public class UserController extends AbstractController {
     }
 
 
-    // @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
     @GetMapping("/confirm-account")
     public ModelAndView confirmUserAccount(@RequestParam("token")String confirmationToken)
     {
@@ -177,19 +197,20 @@ public class UserController extends AbstractController {
             System.out.format("token != null");
             User user = userRepository.findByEmail(token.getUser().getEmail());
             user.setEnabled(true);
-            userRepository.save(user);
             modelAndView.setViewName("accountVerified");
             try {
                 System.out.format("send email to " + user.getEmail());
                 MimeMessage msg = javaMailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(msg, true);
                 helper.setTo(user.getEmail());
-                user.setPassword(new PasswordGenerator().generateRandomPassword(12));
+                String password = PasswordGenerator.generateRandomPassword(12);
+                user.setPassword(password);
                 updateUsers(user.getId(), user);
                 helper.setSubject("Witaj " + user.getName() + "!");
                 helper.setText("Twoje konto zostało utworzone! <br>" +
-                        "Tymczasowe hasło: <b>" + user.getPassword() + "</b>", true);
+                        "Tymczasowe hasło: <b>" + password + "</b>", true);
                 javaMailSender.send(msg);
+                confirmationTokenRepository.delete(token);
             }catch (MessagingException e){
 
             }
@@ -213,6 +234,7 @@ public class UserController extends AbstractController {
         dto.setPermission(user.getPermissions());
         dto.setPassword(user.getPassword());
         dto.setPhoto(user.getPhoto());
+        dto.setPassworChanged(user.isPassworChanged());
         return dto;
     }
 }

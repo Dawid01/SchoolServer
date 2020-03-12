@@ -26,17 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String rolesQuery;
 
 
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.
-                jdbcAuthentication()
+        auth.jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)

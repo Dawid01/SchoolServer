@@ -1,6 +1,10 @@
 package pl.szczepaniak.school.server.schoolserver.model;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -8,7 +12,9 @@ import java.util.List;
 
 @Table(name = "users")
 @Entity
+@DynamicUpdate
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
@@ -28,6 +34,9 @@ public class User {
 
     @Column(name = "enabled")
     private boolean enabled;
+
+    @Column(name="passworChanged")
+    private boolean passworChanged = false;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
@@ -64,10 +73,14 @@ public class User {
         return password;
     }
 
+
     public void setPassword(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-        this.password = hashedPassword;
+        this.password = password;
+    }
+
+
+    public void setPasswordNoEncoder(String password) {
+        this.password = password;
     }
 
     public String getSurname() {
@@ -108,5 +121,13 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isPassworChanged() {
+        return passworChanged;
+    }
+
+    public void setPassworChanged(boolean passworChanged) {
+        this.passworChanged = passworChanged;
     }
 }

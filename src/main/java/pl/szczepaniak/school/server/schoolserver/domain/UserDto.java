@@ -14,6 +14,9 @@ public class UserDto {
 
     private String photo;
 
+    private boolean passworChanged;
+
+
     public Long getId() {
         return id;
     }
@@ -68,5 +71,13 @@ public class UserDto {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public boolean isPassworChanged() {
+        return passworChanged;
+    }
+
+    public void setPassworChanged(boolean passworChanged) {
+        this.passworChanged = passworChanged;
     }
 }
