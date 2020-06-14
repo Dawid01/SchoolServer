@@ -34,15 +34,15 @@ public class GameController {
     }
 
     @PutMapping("/games/{id}")
-    public GameDto updateGame(@PathVariable Long commentId,
+    public GameDto updateGame(@PathVariable Long gameId,
                                  @Valid @RequestBody GameDto gameDto) {
-        return gameRepository.findById(commentId)
+        return gameRepository.findById(gameId)
                 .map(question -> {
                     question.setId(gameDto.getId());
                     question.setName(gameDto.getName());
                     question.setGameScores(gameDto.getGameScores());
                     return convert(gameRepository.save(question));
-                }).orElseThrow(() -> new ResourceNotFoundException("Game not found with id " + commentId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Game not found with id " + gameId));
     }
 
 

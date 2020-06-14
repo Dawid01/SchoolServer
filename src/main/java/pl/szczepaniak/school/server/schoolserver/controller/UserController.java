@@ -141,7 +141,7 @@ public class UserController extends AbstractController {
 
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
             confirmationTokenRepository.save(confirmationToken);
-            String link = "http://192.168.0.110:8080/confirm-account?token="+confirmationToken.getConfirmationToken();
+            String link = "http://192.168.0.182:8080/confirm-account?token="+confirmationToken.getConfirmationToken();
             //String link = "http://35.232.24.163:8080/confirm-account?token="+confirmationToken.getConfirmationToken();
 
             try {

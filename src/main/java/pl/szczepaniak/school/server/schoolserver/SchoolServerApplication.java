@@ -71,6 +71,8 @@ public class SchoolServerApplication {
         };
     }
 
+    ArrayList<User> users = new ArrayList<>();
+
     private void initUser() {
 
         User guest = new User();
@@ -251,6 +253,31 @@ public class SchoolServerApplication {
 //            ex.printStackTrace();
 //        }
 
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+        users.add(user4);
+
+        for(int i = 0; i < 20; i++){
+
+            int rnd = new Random().nextInt(users.size());
+            User user = users.get(rnd);
+            Post post =  new Post();
+            post.setUser(user);
+            post.setContent("Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker. Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).");
+            post.setPermission(0);
+            post.setDateTime("01.07.2019");
+            post.setUserID(user1.getId());
+            int count = new Random().nextInt(10);
+            String[] photos = new String[count];
+            for (int j = 0; j < photos.length; j++) {
+                Random r = new Random();
+                photos[j] = "https://picsum.photos/id/" + r.nextInt(500) + "/600/400";
+            }
+            post.setPhotos(photos);
+            postRepositiry.save(post);
+
+        }
 
     }
 
