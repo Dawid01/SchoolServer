@@ -9,16 +9,24 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.szczepaniak.school.server.schoolserver.controller.ModelARController;
 import pl.szczepaniak.school.server.schoolserver.controller.UserController;
 import pl.szczepaniak.school.server.schoolserver.files.FileController;
 import pl.szczepaniak.school.server.schoolserver.files.FileStorageProperties;
+import pl.szczepaniak.school.server.schoolserver.lesson_plan.LessonPlanReader;
 import pl.szczepaniak.school.server.schoolserver.lesson_plan.Replacement;
 import pl.szczepaniak.school.server.schoolserver.lesson_plan.ReplacementRepository;
 import pl.szczepaniak.school.server.schoolserver.model.*;
 import pl.szczepaniak.school.server.schoolserver.repository.*;
+import sun.security.util.Debug;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 
 
@@ -55,6 +63,9 @@ public class SchoolServerApplication {
 
     @Autowired
     private UserController userController;
+
+    @Autowired
+    private ModelARController modelARController;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -241,17 +252,33 @@ public class SchoolServerApplication {
         replacementRepository.save(replacement3);
 
 
-//        try {
-//            URL url = new URL("https://plan.ezn.edu.pl/data.json");
-//            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-//            String str = "";
-//            while (null != (str = br.readLine())) {
-//                new LessonPlanReader(str,fileController);
-//
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            URL url = new URL("https://plan.ezn.edu.pl/data.json");
+            HttpURLConnection myURLConnection = (HttpURLConnection)url.openConnection();
+
+            String userCredentials = "uczen:uczenEZN";
+            String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+
+            myURLConnection.setRequestProperty ("Authorization", basicAuth);
+            myURLConnection.setRequestMethod("POST");
+//            myURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//            myURLConnection.setRequestProperty("Content-Length", "" + postData.getBytes().length);
+//            myURLConnection.setRequestProperty("Content-Language", "en-US");
+            myURLConnection.setUseCaches(false);
+            myURLConnection.setDoInput(true);
+            myURLConnection.setDoOutput(true);
+            BufferedReader br = new BufferedReader(new InputStreamReader(myURLConnection.getInputStream()));
+            String str = "";
+            String json = "";
+            while (null != (str = br.readLine())) {
+                    json = json + str + "\n";
+            }
+           // Debug.println("Lesson plan json", json);
+            new LessonPlanReader(json,fileController);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         users.add(user1);
         users.add(user2);
@@ -278,6 +305,24 @@ public class SchoolServerApplication {
             postRepositiry.save(post);
 
         }
+
+        ModelAR gtx1700 = new ModelAR();
+        gtx1700.setName("GeForce GTX 1070");
+        gtx1700.setModelURL("http://192.168.0.110:8080/downloadFile/gtx1070.glb");
+        gtx1700.setImageURL("http://192.168.0.110:8080/downloadFile/gtx1070img.png");
+        modelARController.createQuestion(gtx1700);
+
+        ModelAR PS4 = new ModelAR();
+        PS4.setName("PS4");
+        PS4.setModelURL("http://192.168.0.110:8080/downloadFile/ps4.glb");
+        PS4.setImageURL("http://192.168.0.110:8080/downloadFile/ps4img.png");
+        modelARController.createQuestion(PS4);
+
+        ModelAR XBOXONE = new ModelAR();
+        XBOXONE.setName("XBOX ONE");
+        XBOXONE.setModelURL("http://192.168.0.110:8080/downloadFile/xboxone.glb");
+        XBOXONE.setImageURL("http://192.168.0.110:8080/downloadFile/xboxoneimg.png");
+        modelARController.createQuestion(XBOXONE);
 
     }
 

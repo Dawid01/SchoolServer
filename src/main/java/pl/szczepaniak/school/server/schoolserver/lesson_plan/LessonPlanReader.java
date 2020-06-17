@@ -43,7 +43,7 @@ public class LessonPlanReader extends FileNotFoundException {
         try {
             String json = new String(file.getBytes());
             jsonObject = new JsonParser().parse(json).getAsJsonObject();
-        }catch (IOException e){}
+        }catch (IOException ignored){}
 
         if(jsonObject != null) {
             savePeroids();
@@ -94,18 +94,18 @@ public class LessonPlanReader extends FileNotFoundException {
 
         peroidRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("periods").getAsJsonArray("period");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("periods");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Period period = new Period();
-                period.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
-                period.setPeriod(jsonPeroids.get(i).getAsJsonObject().get("_period").getAsString());
-                period.setStartTime(jsonPeroids.get(i).getAsJsonObject().get("_starttime").getAsString());
-                period.setEndTime(jsonPeroids.get(i).getAsJsonObject().get("_endtime").getAsString());
+                period.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("name").getAsString());
+                period.setPeriod(jsonPeroids.get(i).getAsJsonObject().get("period").getAsString());
+                period.setStartTime(jsonPeroids.get(i).getAsJsonObject().get("starttime").getAsString());
+                period.setEndTime(jsonPeroids.get(i).getAsJsonObject().get("endtime").getAsString());
                 peroidRepository.save(period);
             }
-            System.out.println("Save Peroids");
+            System.out.println("Save Periods");
         }
 
     }
@@ -114,15 +114,15 @@ public class LessonPlanReader extends FileNotFoundException {
 
         subjectRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("subjects").getAsJsonArray("subject");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("subjects");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Subject subject = new Subject();
-                subject.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                String subj = jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString();
+                subject.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                String subj = jsonPeroids.get(i).getAsJsonObject().get("name").getAsString();
                 if(subj.chars().count() > 15){
-                    subj = jsonPeroids.get(i).getAsJsonObject().get("_short").getAsString();
+                    subj = jsonPeroids.get(i).getAsJsonObject().get("short").getAsString();
                 }
                 subject.setName(subj);
                 subjectRepository.save(subject);
@@ -136,13 +136,13 @@ public class LessonPlanReader extends FileNotFoundException {
 
         teacherRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("teachers").getAsJsonArray("teacher");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("teachers");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Teacher teacher = new Teacher();
-                teacher.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                teacher.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                teacher.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                teacher.setName(jsonPeroids.get(i).getAsJsonObject().get("name").getAsString());
                 teacherRepository.save(teacher);
             }
             System.out.println("Save Teachers");
@@ -155,13 +155,13 @@ public class LessonPlanReader extends FileNotFoundException {
         groupRepository.deleteAll();
         classRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("classes").getAsJsonArray("class");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("classes");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Class c = new Class();
-                c.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                c.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                c.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                c.setName(jsonPeroids.get(i).getAsJsonObject().get("name").getAsString());
                 classRepository.save(c);
             }
             System.out.println("Save Classes");
@@ -172,14 +172,14 @@ public class LessonPlanReader extends FileNotFoundException {
 
         groupRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("groups").getAsJsonArray("group");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("groups");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 GroupClass group = new GroupClass();
-                group.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                group.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
-                group.setaClass(classRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("_classid").getAsString()));
+                group.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                group.setName(jsonPeroids.get(i).getAsJsonObject().get("name").getAsString());
+                group.setaClass(classRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("classid").getAsString()));
                 groupRepository.save(group);
             }
             System.out.println("Save Groups");
@@ -191,14 +191,14 @@ public class LessonPlanReader extends FileNotFoundException {
 
         dayRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("daysdefs").getAsJsonArray("daysdef");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("daysdefs");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Day day = new Day();
-                day.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                day.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
-                day.setDay(jsonPeroids.get(i).getAsJsonObject().get("_days").getAsString());
+                day.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                day.setName(jsonPeroids.get(i).getAsJsonObject().get("name").getAsString());
+                day.setDay(jsonPeroids.get(i).getAsJsonObject().get("days").getAsString());
                 dayRepository.save(day);
             }
             System.out.println("Save Days");
@@ -209,13 +209,13 @@ public class LessonPlanReader extends FileNotFoundException {
 
         classRoomRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("classrooms").getAsJsonArray("classroom");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("classrooms");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 ClassRoom room = new ClassRoom();
-                room.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                room.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
+                room.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                room.setName(jsonPeroids.get(i).getAsJsonObject().get("name").getAsString());
                 classRoomRepository.save(room);
             }
             System.out.println("Save Rooms");
@@ -226,14 +226,14 @@ public class LessonPlanReader extends FileNotFoundException {
 
         weekRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("weeksdefs").getAsJsonArray("weeksdef");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("weeksdefs");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Week week = new Week();
-                week.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                week.setName(jsonPeroids.get(i).getAsJsonObject().get("_name").getAsString());
-                week.setWeek(jsonPeroids.get(i).getAsJsonObject().get("_weeks").getAsString());
+                week.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                week.setName(jsonPeroids.get(i).getAsJsonObject().get("name").getAsString());
+                week.setWeek(jsonPeroids.get(i).getAsJsonObject().get("weeks").getAsString());
                 weekRepository.save(week);
             }
             System.out.println("Save Weeks");
@@ -244,19 +244,19 @@ public class LessonPlanReader extends FileNotFoundException {
 
         lessonRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("lessons").getAsJsonArray("lesson");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("lessons");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Lesson lesson = new Lesson();
-                lesson.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_id").getAsString());
-                lesson.setClassId(jsonPeroids.get(i).getAsJsonObject().get("_classids").getAsString());
-                lesson.setDayId(jsonPeroids.get(i).getAsJsonObject().get("_daysdefid").getAsString());
-                lesson.setGroupId(jsonPeroids.get(i).getAsJsonObject().get("_groupids").getAsString());
-                lesson.setPeroidId(jsonPeroids.get(i).getAsJsonObject().get("_periodspercard").getAsString());
-                lesson.setSubjectId(jsonPeroids.get(i).getAsJsonObject().get("_subjectid").getAsString());
-                lesson.setTeacherId(jsonPeroids.get(i).getAsJsonObject().get("_teacherids").getAsString());
-                lesson.setWeekId(jsonPeroids.get(i).getAsJsonObject().get("_weeksdefid").getAsString());
+                lesson.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("id").getAsString());
+                lesson.setClassId(jsonPeroids.get(i).getAsJsonObject().get("classids").getAsString());
+                lesson.setDayId(jsonPeroids.get(i).getAsJsonObject().get("daysdefid").getAsString());
+                lesson.setGroupId(jsonPeroids.get(i).getAsJsonObject().get("groupids").getAsString());
+                lesson.setPeroidId(jsonPeroids.get(i).getAsJsonObject().get("periodspercard").getAsString());
+                lesson.setSubjectId(jsonPeroids.get(i).getAsJsonObject().get("subjectid").getAsString());
+                lesson.setTeacherId(jsonPeroids.get(i).getAsJsonObject().get("teacherids").getAsString());
+                lesson.setWeekId(jsonPeroids.get(i).getAsJsonObject().get("weeksdefid").getAsString());
                 lessonRepository.save(lesson);
             }
             System.out.println("Save Lessons");
@@ -267,31 +267,31 @@ public class LessonPlanReader extends FileNotFoundException {
 
         cardRepository.deleteAll();
 
-        JsonArray jsonPeroids = jsonObject.getAsJsonObject("timetable").getAsJsonObject("cards").getAsJsonArray("card");
+        JsonArray jsonPeroids = jsonObject.getAsJsonArray("cards");
 
         if(jsonPeroids != null) {
             for (int i = 0; i < jsonPeroids.size(); i++) {
                 Card card = new Card();
-                card.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("_lessonid").getAsString());
-                Lesson lesson = lessonRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("_lessonid").getAsString());
+                card.setExternalID(jsonPeroids.get(i).getAsJsonObject().get("lessonid").getAsString());
+                Lesson lesson = lessonRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("lessonid").getAsString());
                 Class c = classRepository.findByexternalID(lesson.getClassId());
                 if(c != null)
                     card.setClassName(c.getName());
                 Teacher teacher = teacherRepository.findByexternalID(lesson.getTeacherId());
                 if(teacher != null)
                     card.setTeacher(teacher.getName());
-                Period period = peroidRepository.findByePeroid(jsonPeroids.get(i).getAsJsonObject().get("_period").getAsString());
+                Period period = peroidRepository.findByePeroid(jsonPeroids.get(i).getAsJsonObject().get("period").getAsString());
                 card.setPeroid(period.getStartTime() + " - " + period.getEndTime());
                 card.setStartTime(period.getStartTime());
                 card.setEndTime(period.getEndTime());
                 card.setLessonNumber(Integer.parseInt(period.getPeriod()));
                 Day day = dayRepository.findByexternalID(lesson.getDayId());
-                card.setDay(jsonPeroids.get(i).getAsJsonObject().get("_days").getAsString());
+                card.setDay(jsonPeroids.get(i).getAsJsonObject().get("days").getAsString());
                 Subject subject = subjectRepository.findByexternalID(lesson.getSubjectId());
                 card.setSubject(subject.getName());
                 Week week = weekRepository.findByexternalID(lesson.getWeekId());
                 card.setWeek(week.getName());
-                ClassRoom classRoom = classRoomRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("_classroomids").getAsString());
+                ClassRoom classRoom = classRoomRepository.findByexternalID(jsonPeroids.get(i).getAsJsonObject().get("classroomids").getAsString());
                 if(classRoom != null)
                 card.setRoom(classRoom.getName());
                     GroupClass groupClass = groupRepository.findByexternalID(lesson.getGroupId());
