@@ -308,20 +308,20 @@ public class SchoolServerApplication {
 
         ModelAR gtx1700 = new ModelAR();
         gtx1700.setName("GeForce GTX 1070");
-        gtx1700.setModelURL("http://192.168.0.110:8080/downloadFile/gtx1070.glb");
-        gtx1700.setImageURL("http://192.168.0.110:8080/downloadFile/gtx1070img.png");
+        gtx1700.setModelURL("http://35.194.43.188:8080/downloadFile/gtx1070.glb");
+        gtx1700.setImageURL("http://35.194.43.188:8080/downloadFile/gtx1070img.png");
         modelARController.createQuestion(gtx1700);
 
         ModelAR PS4 = new ModelAR();
         PS4.setName("PS4");
-        PS4.setModelURL("http://192.168.0.110:8080/downloadFile/ps4.glb");
-        PS4.setImageURL("http://192.168.0.110:8080/downloadFile/ps4img.png");
+        PS4.setModelURL("http://35.194.43.188:8080/downloadFile/ps4.glb");
+        PS4.setImageURL("http://35.194.43.188:8080/downloadFile/ps4img.png");
         modelARController.createQuestion(PS4);
 
         ModelAR XBOXONE = new ModelAR();
         XBOXONE.setName("XBOX ONE");
-        XBOXONE.setModelURL("http://192.168.0.110:8080/downloadFile/xboxone.glb");
-        XBOXONE.setImageURL("http://192.168.0.110:8080/downloadFile/xboxoneimg.png");
+        XBOXONE.setModelURL("http://35.194.43.188:8080/downloadFile/xboxone.glb");
+        XBOXONE.setImageURL("http://35.194.43.188:8080/downloadFile/xboxoneimg.png");
         modelARController.createQuestion(XBOXONE);
 
     }
